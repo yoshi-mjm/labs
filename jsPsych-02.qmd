@@ -1,0 +1,910 @@
+---
+title: "jsPsych 演習: 第2回"
+toc: true
+format:
+    html:
+        theme: "flatly"
+        embed-resources: true
+        highlight-style: github
+---
+
+# jsPsychの応用とデータ確認
+
+## 第2回演習の準備 - 新しいプロジェクトフォルダの作成とファイルパスの理解
+
+第1回では、皆さんの**作業フォルダの直下**に `index.html` や `script.js`、`style.css`、そして `jspsych` ライブラリのすべてを配置しました。しかし、実際の開発では、プロジェクトごとにファイルを整理することが一般的です。
+
+第2回では、より実践的なファイル管理を学ぶために、**新しいプロジェクトフォルダ**を作成し、その中に今回の演習用の `index.html` と `script.js`, `style.css` を配置します。
+
+既存の `jspsych` ライブラリ（`jspsych`フォルダ）は、引き続き**今回の新しいプロジェクトフォルダの「上の階層」（つまり、作業フォルダの直下）**に配置されているものとします。
+
+### 1. 新しいプロジェクトフォルダの作成
+
+まず、第1回で使ったファイル群がある場所とは別に、新たに第2回用のフォルダを作成しましょう。
+
+**手順:**
+
+1. PCの好きな場所（例: デスクトップやドキュメントフォルダ）で、**第1回のファイルが置いてある場所と同じ階層**に、新しくフォルダを作成してください。
+2. フォルダの名前は、例えば `jspsych_exercise_2` のように、第2回用であることがわかる名前にしましょう。
+
+```
+あなたの作業フォルダ/  (第1回のファイル群がここにある)
+    ├── index.html       (第1回で作成)
+    ├── script.js        (第1回で作成)
+    ├── style.css        (第1回で作成・共通利用)
+    ├── jspsych/         (第1回で配置・共通利用)
+    │   ├── jspsych.js
+    │   └── ...
+    └── jspsych_exercise_2/  (今回作成するフォルダ)
+```
+
+### 2. ファイルパスの理解と設定（相対パス）
+
+### 2-1. 相対パスとは？
+
+ファイルパスとは、ファイルやフォルダがコンピュータのどこにあるかを示す「住所」のようなものです。
+
+* **絶対パス**: コンピュータのルート（一番上の階層）から目的のファイルまでの完全な住所を示す方法です。（例: `C:\Users\YourName\Documents\project\index.html`）
+* **相対パス**: 現在いる場所（現在のファイルがある場所）を基準にして、目的のファイルまでの道筋を示す方法です。
+
+今回の演習では、`jspsych_exercise_2` フォルダの中に置く `index.html` から、その「上の階層」にある `jspsych` フォルダの中のライブラリを参照する必要があります。このときに「相対パス」を使います。
+
+### 2-2. 「上の階層」を参照する方法 (`../`)
+
+相対パスで一つ上の階層のフォルダやファイルを参照するには、`../` (ドット2つとスラッシュ) を使います。
+
+例えば、`jspsych_exercise_2/index.html` から `jspsych.js` を参照する場合、`jspsych.js` は `jspsych_exercise_2` の一つ上の階層にある `jspsych` フォルダの中にあるので `jspsych.js` を参照するには `../jspsych/jspsych.js` と記述します。
+
+<div style="page-break-before:always"></div>
+
+**今回のフォルダ構成のイメージ:**
+
+```
+あなたの作業フォルダ/  (現在の場所)
+    ├── jspsych/          <-- ここに jspsych ライブラリのフォルダがある
+    │   ├── jspsych.js
+    │   ├── plugin-instructions.js
+    │   └── ...
+    ├── index.html        (第1回用)
+    ├── script.js         (第1回用)
+    ├── style.css         (第1回用)
+    └── jspsych_exercise_2/  <-- 今回の新しい作業フォルダ
+        ├── index.html       <-- このファイルから上の階層を参照する
+        ├── script.js        <-- このファイルは新しいもの
+        └── style.css        <-- このファイルは新しいもの
+```
+
+### 3. `index.html` の新規作成とパスの修正
+
+それでは、`jspsych_exercise_2` フォルダの中に、新しい `index.html` ファイルを作成し、必要なライブラリへのパスを修正しましょう。
+
+**手順:**
+
+1.  VS Code で、`jspsych_exercise_2` フォルダを開きます。
+2.  その中に `index.html` という名前で新しいファイルを作成します。
+3.  以下のHTMLコードをコピー＆ペーストしてください。**特に、`href` や `src` のパスが `../` で始まっている点に注目してください。**
+
+**index.html**
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsPsych 演習2</title>
+    <link href="../jspsych/jspsych.css" rel="stylesheet" type="text/css">
+    <link href="../jspsych/survey.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="jspsych-display">
+    <script src="../jspsych/jspsych.js"></script>
+    <script src="../jspsych/plugin-instructions.js"></script>
+    <script src="../jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="../jspsych/plugin-survey-text.js"></script>
+    <script src="../jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="../jspsych/plugin-survey-likert.js"></script>
+    <script src="../jspsych/plugin-survey.js"></script>
+    <script src="script.js"></script>
+    </div>
+</body>
+</html>
+```
+- `../jspsych/jspsych.css:` index.html のある場所（`jspsych_exercise_2`）から見て、一つ上の階層にある `jspsych` フォルダの中の `jspsych.css` を参照しています。`jspsyc.js` やそのプラグインも同様です。
+- `../jspsych/survey.css:` こちらも `jspsych` フォルダの中にあるスタイルファイルですが，後述の surveyJS のためのスタイルを定義したファイルです。もし，`survey.css` がフォルダ中にない場合は，`jsPsych.zip` を再度入手して展開し直してください。... [https://github.com/jspsych/jsPsych/releases/download/%40jspsych%2Fplugin-survey%402.1.0/jspsych.zip](https://github.com/jspsych/jsPsych/releases/download/%40jspsych%2Fplugin-survey%402.1.0/jspsych.zip)
+- `style.css, script.js:` これは index.html と同じ `jspsych_exercise_2` フォルダ内に置くので、`../` は不要です。
+
+<div style="page-break-before:always"></div>
+
+
+### 4. 最低限の `script.js` と `style.css` を作成しよう
+
+新しい `index.html` を作成したので、それに合わせて、最低限の動作をする `script.js` を作成してみましょう。この `script.js` は、jsPsychを初期化し、空のタイムラインを実行するだけのシンプルなものです。
+
+**手順:**
+
+1.  VS Code で、`jspsych_exercise_2` フォルダの中に `script.js` という名前で新しいファイルを作成します。
+2.  以下のJavaScriptコードをコピー＆ペーストしてください。
+
+**script.js**
+```javascript
+// jsPsych のインスタンスを初期化し、実験の全体的な設定を行います。
+// ここで jsPsych の基本的な動作を設定します。
+const jsPsych = initJsPsych({
+    // on_finishは、すべての実験トライアルが終了したときに実行される関数です。
+    // 今回は、実験が完了したときにデータをブラウザに表示するように設定しています。
+    on_finish: function() {
+        jsPsych.data.displayData(); // 実験データをブラウザ画面に表示します。
+        // 後ほど、ここでデータをCSVとしてダウンロードする設定も行います。
+    }
+});
+
+// 実験のタイムラインを定義します。
+// タイムラインは、実行される「ブロック」（質問や指示など）の順序を決定するリストです。
+const timeline = [];
+
+// 現時点ではタイムラインは空なので、何も表示されません。
+
+// すべてのブロックが定義されたタイムラインを実行して、実験を開始します。
+jsPsych.run(timeline);
+```
+
+- `const jsPsych = initJsPsych({...})`:
+  - これは、jsPsych を使用するための準備（初期化）を行う最も基本的なコードです。`initJsPsych` 関数を呼び出すことで、jsPsych の「インスタンス」と呼ばれるものが作成され、`jsPsych` という変数に格納されます。
+  - `on_finish:` この設定は、実験がすべて終了したときに自動的に実行される部分です。ここでは `jsPsych.data.displayData();` が指定されており、実験完了後に収集されたデータがブラウザ画面に表示されます。
+  - jsPsych の名前は任意です。例えば，`const myExperiment = iniJsPsych();` とすると，jsPsych のインスタンスは，`myExperiment` という変数に格納されます。この場合，`on_finish:` にある `function()` 以下は，`function() {    myExperiment.data.displayData();}` と書きます。
+- `const timeline = [];`:
+  - これは、実験を構成する個々の「ブロック」（例えば、教示、質問、休憩など）を順序立てて格納するための、空のリスト（JavaScriptでは「配列」と呼びます）です。後ほど、この `timeline` 配列にブロックを追加していくことで、実験の流れを構築します。
+- `jsPsych.run(timeline);`:
+  - このコードが実行されることで、配列 `timeline` に定義されたブロックが上から順に実行され、jsPsychの実験が開始されます。
+
+続いて，同様に `style.css` を作成します。
+
+**手順:**
+
+1.  VS Code で、`jspsych_exercise_2` フォルダの中に `style.css` という名前で新しいファイルを作成します。
+2.  以下の CSS コードをコピー＆ペーストしてください。
+
+<div style="page-break-before:always"></div>
+
+**style.css**
+```css
+/* style.css */
+
+/* jsPsychの表示領域全体の設定 */
+body {
+    display: flex; /* Flexbox を使って要素を配置 */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    min-height: 100vh; /* 画面全体の高さを使用 */
+    margin: 0; /* body の余白をなくす */
+    background-color: #f0f0f0; /* 背景色を設定 */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* フォントの指定 */
+    color: #333; /* 文字色 */
+}
+
+/* jsPsychが自動生成するコンテンツのスタイル調整 */
+.jspsych-content {
+    text-align: center; /* テキストを中央揃え */
+    margin-bottom: 20px; /* 下に余白 */
+    max-width: 90vw; /* 画面幅の90%が最大幅 */
+    max-height: 90vh; /* 画面高さの90%が最大高さ */
+    width: 100%; /* 親要素の幅に合わせて伸びる */
+    height: 100%; /* 親要素の高さに合わせて伸びる */
+    overflow: auto; /* 内容がはみ出したらスクロールできるようにする */
+    background-color: #fff; /* 背景色 */
+    padding: 20px; /* 内側の余白 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影 */
+    border-radius: 8px; /* 角を丸くする */
+    box-sizing: border-box; /* paddingやborderを幅・高さに含める */
+}
+
+/* 質問文のスタイル */
+.jspsych-stimulus {
+    font-size: 1.2em; /* フォントサイズを少し大きく */
+    margin-bottom: 25px; /* 下に余白 */
+    line-height: 1.5; /* 行の高さ */
+}
+
+/* 入力フィールドのスタイル */
+.jspsych-survey-text input[type="text"] {
+    width: 80%; /* 幅 */
+    padding: 10px; /* 内側の余白 */
+    margin-top: 10px; /* 上に余白 */
+    font-size: 1em; /* フォントサイズ */
+    border: 1px solid #ccc; /* 枠線 */
+    border-radius: 4px; /* 角を丸くする */
+}
+
+/* ボタンのスタイル */
+.jspsych-btn {
+    background-color: #007bff; /* ボタンの背景色 */
+    color: white; /* 文字色 */
+    padding: 10px 20px; /* 内側の余白 */
+    border: none; /* 枠線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    cursor: pointer; /* マウスカーソルを指マークに */
+    font-size: 1em; /* フォントサイズ */
+    margin-top: 20px; /* 上に余白 */
+    transition: background-color 0.3s ease; /* ホバー時のアニメーション */
+}
+
+.jspsych-btn:hover {
+    background-color: #0056b3; /* ホバー時の背景色 */
+}
+```
+
+
+### 5. トラブルシューティングの基本：JavaScriptコンソールを確認しよう
+
+jsPsychを使ったウェブページが期待通りに動かない時、その原因を探るための最も強力なツールの一つが、ブラウザの「**開発者ツール (Developer Tools)**」です。特に、その中の「**コンソール (Console)**」と呼ばれる部分には、JavaScriptのエラーメッセージやプログラムからの出力が表示され、問題解決の大きなヒントになります。
+
+この資料では、皆さんがよく使う「Google Chrome」と「Microsoft Edge」の2つのブラウザで、JavaScriptコンソールを表示する方法を説明します。
+
+### 5-1. Google Chrome でコンソールを表示する方法
+
+Google Chrome でjsPsychのページを開いている状態で、以下のいずれかの方法で開発者ツールを開き、コンソールを表示できます。
+
+#### 方法1: ショートカットキーを使う (最も速い方法)
+
+1.  jsPsychのページがChromeで表示されている状態で、キーボードの **`F12` キー** を押します。
+    * (ノートPCによっては `Fn` キーと同時に `F12` を押す必要がある場合があります。)
+2.  または、**`Ctrl` + `Shift` + `J`** (Windows) または **`Cmd` + `Option` + `J`** (Mac) を押します。
+
+#### 方法2: メニューから開く
+
+1.  画面右上のメニューアイコン (**...**) を開く。
+2.  表示されるメニューの中から「**その他のツール**」→「**デベロッパーツール**」を選択します。
+
+#### 開いた後の操作
+
+* 開発者ツールが画面の片側（通常は右側か下側）に表示されます。
+* 上部または下部に並んでいるタブの中から「**Console (コンソール)**」タブを探してクリックします。
+
+### 5-2. Microsoft Edge でコンソールを表示する方法
+
+Microsoft Edge でも、Google Chrome とほぼ同じ方法で開発者ツールを開き、コンソールを表示できます。
+
+#### 方法1: ショートカットキーを使う (最も速い方法)
+
+1.  jsPsychのページがEdgeで表示されている状態で、キーボードの **`F12` キー** を押します。
+    * (ノートPCによっては `Fn` キーと同時に `F12` を押す必要がある場合があります。)
+2.  または、**`Ctrl` + `Shift` + `J`** (Windows) を押します。
+
+#### 方法2: メニューから開く
+
+1.  画面右上のメニューアイコン (**...**) を開く。
+2.  表示されるメニューの中から「**その他のツール**」→「**開発者ツール**」を選択します。
+
+#### 開いた後の操作
+
+* 開発者ツールが画面の片側（通常は右側か下側）に表示されます。
+* 上部または下部に並んでいるタブの中から「**Console (コンソール)**」タブを探してクリックします。
+
+### 5-3. コンソールにエラーが表示されたら？
+
+コンソールに**赤色の文字**でメッセージが表示されている場合、それはJavaScriptのコードに何らかの問題があることを示しています。
+
+* 例えば、「`Uncaught ReferenceError: jsPsychInstructions is not defined`」のようなエラーは、「`jsPsychInstructions` というものが定義されていません」という意味です。これは、対応するプラグインファイル（`plugin-instructions.js`）が正しく読み込まれていない、または読み込み忘れている可能性を示唆します。
+* エラーメッセージは英語ですが、重要なキーワード（`not defined`、`cannot read property of undefined`、`Failed to load resource`など）を把握し、どの行でエラーが起きているか（ファイル名と行番号）を確認することが、問題解決の第一歩です。
+
+**エラーメッセージを見ることで、より早く原因を特定し、解決に導くことができます。**
+
+<div style="page-break-before:always"></div>
+
+## jsPsychの応用とデータ確認 (本編)
+
+### はじめに
+
+第1回でjsPsychの基本的な使い方と環境設定、そして第2回演習のためのプロジェクト準備（新しいフォルダ作成と相対パスの設定）が完了しましたね。ここからは、jsPsychの**より高度な機能**と、**実験データの取得・確認方法**について深掘りしていきます。
+
+### 本日のゴール
+
+* 多様なjsPsychプラグインの特性を理解し、適切に使い分けられるようになる。
+* 特に、`jsPsychSurveyLikert` と `jsPsychSurvey` (Rating質問) の違いと使い分けを理解する。
+* タイムラインの階層構造を理解し、複雑な実験フローを設計できるようになる。
+* 試行の順序をランダム化し、実験デザインの妥当性を高める方法を学ぶ。
+* JavaScriptの関数を使って、コードを効率的に「ブロック化」する手法を習得する。
+* 収集した実験データを正しく確認・ダウンロードし、分析への準備ができるようになる。
+
+これらのスキルを習得することで、より多様で洗練された心理学の調査や実験を、jsPsychを使って構築できるようになります。
+
+## 1. jsPsychのプラグインの種類と特性理解
+
+jsPsychが持つ機能は、それぞれの目的に特化した「**プラグイン**」として提供されています。これにより、様々な種類の実験や調査を柔軟に作成できます。プラグインは、jsPsych本体とは別のJavaScriptファイルとして提供されており、`index.html`で読み込むことで利用可能になります。
+
+### 1-1. よく使うプラグインの再確認と演習
+
+第1回でも使用した主要なプラグインを、簡単な復習を兼ねて確認しましょう。
+
+#### ① `jsPsychInstructions` (plugin-instructions.js)
+
+* **用途**: 複数のページにわたる教示文や説明文を表示するために使います。参加者はボタンをクリックしてページを移動します。インフォームドコンセントフォームなど、長いテキスト情報を段階的に見せたい場合に非常に便利です。
+* **特徴**: 長い説明や同意書を表示するのに適しており、前のページに戻ることもできます。
+* **主なオプション**:
+    * `pages`: 表示するHTML文字列の配列。`` や '', "" で囲まれた，各配列要素が1ページ分になります。
+    * `button_label_next`: 次のページへ進むボタンに表示するテキスト。
+    * `button_label_previous`: 前のページへ戻るボタンに表示するテキスト。
+    * `show_clickable_nav`: ナビゲーションボタン（次へ/戻る）を表示するかどうかを`true`か`false`で指定します。
+
+* **演習1-1: 練習用の指示ページを作成する**
+    * `script.js`を開き、既存のタイムライン（`timeline`）に新しいブロックを追加してみましょう。
+    * `jsPsychInstructions`プラグインを使い、2～3ページ程度の短い指示（例：「準備は良いですか？」「次のページで質問が始まります」など）を作成してみましょう。
+    * Live Serverで実行し、ボタンをクリックしてページが移動できるか確認してください。
+
+    ```javascript
+    // 演習1-1の例
+    const practice_instructions = {
+        type: jsPsychInstructions,
+        pages: [
+            `<p>この演習セクションでは、簡単な練習問題を行います。</p><p>次へ進んでください。</p>`,
+            `<p>準備ができたら「スタート」ボタンをクリックしてください。</p>`
+        ],
+        button_label_next: '次へ',
+        button_label_previous: '戻る',
+        show_clickable_nav: true
+    };
+    timeline.push(practice_instructions); // タイムラインに追加
+    ```
+
+#### ② `jsPsychHtmlKeyboardResponse` (plugin-html-keyboard-response.js)
+
+* **用途**: シンプルなHTMLコンテンツを表示し、特定のキー入力を待つために使います。
+* **特徴**: 実験の開始合図、休憩、短い指示など、参加者にキー操作を求める場面で使われ，反応時間の計測にも利用されます。
+* **主なオプション**:
+    * `stimulus`: 表示するHTML文字列。
+    * `choices`: 待機するキーの配列。例えば `[' ']` でスペースキーの入力を待ちます。`"NO_KEYS"`とすると、キー入力を待たずに次のブロックへ自動的に進みます。
+    * `trial_duration`: 刺激を提示する時間（ミリ秒単位）。この時間内にキー入力がなければ次のブロックへ自動的に進みます。指定しない場合はキー入力があるまで続きます。`choices: "NO_KEYS"` と組み合わせると，一定時間経過後に自動的に次のページへ移る（知覚実験で注視点を表示するなど）という機能を実装できます。
+
+* **演習1-2: キー入力で進む教示を作成する**
+    * `script.js`で、`jsPsychHtmlKeyboardResponse`を使って「スペースキーを押して開始」という指示を作成してみましょう。
+    * `stimulus`にはわかりやすい文章を、`choices`には`[' ']`を設定してください。
+    * このブロックをタイムラインに追加し、Live Serverで実行して、スペースキーで次へ進めることを確認してください。
+
+    ```javascript
+    // 演習1-2の例
+    const start_trial_prompt = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<p>準備ができたら、<strong>スペースキー</strong>を押して次の質問に進んでください。</p>`,
+        choices: [' '], // スペースキーの入力を待つ
+    };
+    timeline.push(start_trial_prompt); // 必要に応じてタイムラインに追加
+    ```
+
+#### ③ `jsPsychSurveyText` (plugin-survey-text.js)
+
+* **用途**: 参加者からの自由記述形式のテキスト入力を求める質問に使います。
+* **特徴**: 名前、年齢、学年、簡単な意見など、短いテキスト情報を収集するのに適しています。
+* **主なオプション**:
+    * `questions`: 質問オブジェクトの配列。
+        * `prompt`: 参加者に表示する質問文。
+        * `placeholder`: 入力欄に薄く表示されるヒントテキスト（例示）。
+        * `name`: 回答データとして保存される際の項目名（キー）です。データ分析時にこの名前で回答を特定します。
+        * `required`: 回答を必須にする場合は`true`，しない場合は `false` を設定します。
+    * `button_label`: 次へ進むボタンに表示するテキスト。
+
+* **演習1-3: 自由記述質問を追加する**
+    * 第1回で年齢の質問に使ったのがこのプラグインです。改めて、例えば「今日の気分を一言で教えてください」のような質問を追加してみましょう。
+    * `prompt`、`placeholder`、`name`を適切に設定してください。
+    * `required: true`にして、入力しないと次へ進めないことを確認してみましょう。
+
+#### ④ `jsPsychSurveyMultiChoice` (plugin-survey-multi-choice.js)
+
+* **用途**: 提示された複数の選択肢の中から、参加者に一つ（または複数）を選ばせる質問に使います。
+* **特徴**: リッカート尺度や、性別、はい/いいえ、特定のカテゴリ選択など、固定された選択肢からの回答を得たい場合に非常に便利です。
+* **主なオプション**:
+    * `questions`: 質問オブジェクトの配列。
+        * `prompt`: 質問文。
+        * `options`: 選択肢の文字列配列。
+        * `name`: 回答データを識別するためのキー。
+        * `required`: 回答を必須にするか (`true` または `false`)。
+    * `randomize_question_order`: `questions` 内の質問順序をランダムにするかどうか（`true`でランダム）。
+    * `button_label`: 次へ進むボタンのラベル。
+
+* **演習1-4: 複数選択質問を追加する**
+    * 第1回で性別の質問と陰謀論信念尺度に使ったのがこのプラグインです。
+    * 例えば、「好きな季節を一つ選んでください」といった質問を作成してみましょう。
+    * 選択肢を3～4つ程度用意し、`options`に配列として設定してください。
+
+### 1-2. 新たな主要プラグインの紹介とその特性
+
+ここからが第2回のメインテーマの一つです。同じような目的（例：評価尺度）を持つプラグインでも、その機能や表現方法は異なります。具体的な比較を通して、プラグインの選定眼を養いましょう。
+
+#### ⑤ `jsPsychSurveyLikert` (plugin-survey-likert.js)
+
+* **用途**: **複数のリッカート尺度項目をまとめて、一度に表示し回答させる**ために特化されたプラグインです。
+* **特徴**: 質問と尺度の選択肢が一覧で表示されるため、連続した尺度項目への回答が直感的でスムーズです。`SurveyMultiChoice` で一つずつ表示するよりも、連続した尺度項目に適しており、視覚的に整えやすいというメリットがあります。
+* **主なオプション**:
+    * `questions`: 質問文の配列。各要素が1つのリッカート尺度項目になります。
+    * `labels`: 尺度の各選択肢のラベル（例: `['全くそう思わない', 'そう思わない', ..., '強くそう思う']`）。
+    * `required`: 各質問の回答を必須にするか。
+    * `randomize_question_order`: `questions`配列内の質問の表示順をランダムにするか。
+
+* **演習1-5: 感情評価尺度を `jsPsychSurveyLikert` で作成する**
+    * まず、`index.html`に`plugin-survey-likert.js`を読み込む記述が追加されていることを確認してください（先ほど修正済みです）。
+    * `script.js`に以下の感情評価尺度（例）を`jsPsychSurveyLikert`　を使って追加してみましょう。尺度のラベルは、`['全く当てはまらない', 'あまり当てはまらない', 'どちらでもない', 'やや当てはまる', '非常に当てはまる']`とします。
+    * 尺度のラベルは共通なので，`jsPsychSurveyLikert`プラグインより前に，事前に配列を作っておきます。
+
+    ```javascript
+    // 演習1-5の例：jsPsychSurveyLikertを使った感情評価尺度
+    const emotion_likert_label = [
+            '全く当てはまらない',
+            'あまり当てはまらない',
+            'どちらでもない',
+            'やや当てはまる',
+            '非常に当てはまる'
+    ];
+    const emotion_likert_scale = {
+        type: jsPsychSurveyLikert,
+        questions: [
+            { prompt: 'Q1. 私は現在、リラックスしている。', name: 'relax_q_likert', labels: emotion_likert_label },
+            { prompt: 'Q2. 私は現在、不安を感じている。', name: 'anxiety_q_likert', labels: emotion_likert_label },
+            { prompt: 'Q3. 私は現在、幸福を感じている。', name: 'happiness_q_likert', labels: emotion_likert_label }
+        ],
+        required: true,
+        randomize_question_order: false, // 今回は順序固定
+        button_label: '次へ'
+    };
+    timeline.push(emotion_likert_scale); // タイムラインに追加
+    ```
+    * Live Serverで実行し、質問と選択肢がどのように表示されるか、一度に全ての項目が表示されるかを確認してください。
+
+#### ⑥ `jsPsychSurvey` (plugin-survey.js)
+
+* **用途**: JavaScriptで動く高機能なアンケート作成ツールである**SurveyJSライブラリ**を、jsPsych内で利用するためのラッパープラグインです。SurveyJSは非常に多機能で、複雑なアンケート設計が可能です。
+* **特徴**:
+    * **質問タイプの多様性**: テキスト、複数選択、単一選択、リッカート、**評価尺度 (Rating)**、ランキング、ファイルアップロード、ブール（Yes/No）など、非常に多くの質問形式に対応しています。
+    * **複雑なレイアウトとロジック**: 条件分岐、ページ分け、質問グループ化など、高度なアンケート設計が可能です。
+    * **定義方法**: 他のプラグインと異なり、`survey_json`オプションに**SurveyJS独自のJSON形式**で質問を定義します。
+
+* **`jsPsychSurveyLikert` と `jsPsychSurvey` (Rating質問) の比較**:
+    * `jsPsychSurveyLikert` は、標準的なリッカート尺度を**シンプルに実装**するのに最適化されており、コードが直感的で記述しやすいです。
+    * `jsPsychSurvey` の **Rating質問** は、より柔軟な評価尺度（例えば、星評価、感情アイコンの選択など）を表現できます。`SurveyJS` の豊富なカスタマイズオプションを利用できるため、特定のUIや詳細な評価ニーズがある場合に強力です。コードはJSON形式になるため、学習コストはやや高くなりますが、その分、非常に柔軟な表現が可能です。
+
+* **演習1-6: 感情評価尺度を `jsPsychSurvey` (Rating) で作成する**
+    * **重要**: まず、`index.html`に`plugin-survey.js`を読み込む記述が追加されていることを確認してください（先ほど修正済みです）。
+    * 次に、`script.js`に以下の「感情評価尺度」（演習1-5と同じ内容）を`jsPsychSurvey`プラグインの**Rating質問タイプ**を使って追加してみましょう。
+
+    ```javascript
+    // 演習1-6の例：jsPsychSurveyを使った感情評価尺度（Rating質問タイプ）
+    const emotion_survey_rating_scale = {
+        type: jsPsychSurvey,
+        survey_json: {
+            title: "現在の感情を評価してください",
+            completeText: '次へ',
+            elements: [
+                {
+                    type: "rating", // Rating質問タイプを指定
+                    name: "relax_q_surveyjs",
+                    title: "Q1. 私は現在、リラックスしている。",
+                    minRateDescription: "全く当てはまらない",
+                    maxRateDescription: "非常に当てはまる",
+                    rateCount: 5, // 5段階評価
+                    rateValues: [1, 2, 3, 4, 5] // 内部的な値 (1から5)
+                },
+                {
+                    type: "rating",
+                    name: "anxiety_q_surveyjs",
+                    title: "Q2. 私は現在、不安を感じている。",
+                    minRateDescription: "全く当てはまらない",
+                    maxRateDescription: "非常に当てはまる",
+                    rateCount: 5,
+                    rateValues: [1, 2, 3, 4, 5]
+                },
+                {
+                    type: "rating",
+                    name: "happiness_q_surveyjs",
+                    title: "Q3. 私は現在、幸福を感じている。",
+                    minRateDescription: "全く当てはまらない",
+                    maxRateDescription: "非常に当てはまる",
+                    rateCount: 5,
+                    rateValues: [1, 2, 3, 4, 5]
+                }
+            ],
+        },
+    };
+    timeline.push(emotion_survey_rating_scale); // タイムラインに追加
+    ```
+    * Live Serverで実行し、`jsPsychSurveyLikert`と`jsPsychSurvey` (Rating) の表示形式の違いを確認してください。特に、それぞれの見た目、操作感、そしてデータとして取得される形式（`on_finish`で表示されるデータ）の違いに注目しましょう。
+    * なお，`jsPsychSurvey` は，ボタンのテキストは，`jsPsychSurveyLikert` と異なり，`button_label` ではなく，`completeText` となり，指定場所も `survey_json` オプションの中で記述します。
+
+#### 1-3. その他の便利なプラグイン（簡単な紹介）
+
+* **`jsPsychImageKeyboardResponse` (plugin-image-keyboard-response.js)**:
+    * **用途**: 画像を画面に提示し、参加者が特定のキーを入力するのを待つ実験で使います。
+    * **特徴**: 視覚刺激に対する反応時間測定（例：顔画像を見たときの反応時間）によく使われます。
+* **`jsPsychAudioButtonResponse` (plugin-audio-button-response.js)**:
+    * **用途**: 音声を再生し、参加者がボタンをクリックするのを待つ実験で使います。
+    * **特徴**: 聴覚刺激に対する反応（例：特定の音が聞こえたらボタンを押す）を測定するのに適しています。
+
+---
+
+## 2. タイムラインの階層構造と順序のシャッフル
+
+実験や調査は、常に単純な一直線の流れではありません。特定のブロックを繰り返したり、質問の順番をランダムにしたり、条件によって表示を変えたりすることがよくあります。jsPsychはこれらの複雑なフローを`timeline`の機能で柔軟に実現できます。
+
+### 2-1. タイムラインの階層構造（ネスト）
+
+jsPsychの`timeline`は、ブロックの中にさらに別のタイムラインを定義することで、複雑な構造を持つことができます。これを「**ネスト（入れ子）**」と呼びます。
+
+例えば、複数の質問をまとめた「質問セクション」を繰り返し表示したい場合や、練習試行と本試行を分けたい場合などに便利です。`timeline`プロパティを持つオブジェクト（つまり、単一のブロックではなく、複数のブロックをまとめるためのコンテナ）を作成し、その中にさらにブロックや別のタイムラインを配置します。
+
+```javascript
+// 例：ネストされたタイムラインの基本構造
+// このブロックセットは、2つの質問（質問Aと質問B）から構成されます
+const question_block_set = {
+    timeline: [ // このtimelineプロパティの中に、一連のブロックを定義します
+        {
+            type: jsPsychSurveyText,
+            questions: [{ prompt: '質問A: 今日は何をしましたか？', name: 'qA' }]
+        },
+        {
+            type: jsPsychSurveyMultiChoice,
+            questions: [{ prompt: '質問B: 朝食は食べましたか？', options: ['はい', 'いいえ'], name: 'qB' }]
+        }
+    ]
+};
+
+// 全体のタイムライン
+const full_timeline = [];
+full_timeline.push(question_block_set); // 作成した質問セットを全体のタイムラインに追加
+full_timeline.push(question_block_set); // 同じ質問セットをもう一度追加
+
+// この場合、実験は「質問A → 質問B → 質問A → 質問B」という順序で進みます。
+// 同じブロック定義を再利用できることがポイントです。
+// なお実行の際は，full_timeline を run する必要があります。
+// jsPsych.run(full_timeline)
+```
+
+- `timeline` プロパティを持つオブジェクト自体も、`timeline` 配列に追加できる一つの「ブロック」として扱われます。これにより、実験の構造をモジュール化し、管理しやすくなります。
+- **演習2-1: 質問グループをネスト化する**
+  - 新しい `script.js` に、第1回で作成した性別と年齢の質問（および国籍の質問）をまとめて、一つのネストされたタイムラインとして定義してみましょう。
+  - ネストされたタイムラインを `personal_info_block` のような名前の変数に入れ、`timeline.push(personal_info_block);` として全体のタイムラインに追加してみてください。
+  - Live Serverで実行し、動作に変化がないことを確認します（見た目は変わりませんが、内部構造は整理されています）。
+
+```javascript
+// 演習2-1の例
+const personal_info_block = {
+    timeline: [
+        // 性別の質問 (以前のコードから移動)
+        {
+            type: jsPsychSurveyMultiChoice,
+            questions: [
+                { 
+                    prompt: 'あなたの性別を選択してください。', 
+                    options: ['男性', '女性', 'その他', '回答したくない'], 
+                    name: 'gender', required: true 
+                }
+            ],
+            button_label: '次へ進む',
+        },
+        // 年齢の質問 (以前のコードから移動)
+        {
+            type: jsPsychSurveyText,
+            questions: [
+                { 
+                    prompt: 'あなたの年齢を入力してください。', 
+                    placeholder: '例: 20', 
+                    name: 'age', required: true 
+                }
+            ],
+            button_label: '次へ進む',
+        },
+        // 国籍の質問 (以前のコードから移動)
+        {
+            type: jsPsychSurveyMultiChoice,
+            questions: [
+                { 
+                    prompt: 'あなたの国籍を選択してください。', 
+                    options: ['日本', 'その他の国'], 
+                    name: 'nationality', 
+                    required: true 
+                }],
+            button_label: '次へ進む',
+        }
+    ]
+};
+timeline.push(personal_info_block); // タイムラインに追加
+```
+
+### 2-2. 試行の順序のシャッフル
+
+心理学の実験では、刺激や質問の提示順序が結果に影響を与える「順序効果」を避けるために、その順序をランダムにすることがよくあります。jsPsychはこれを簡単に行うことができます。
+
+- `randomize_order: true` オプションと `timeline_variables`:
+  - jsPsychで同じタイプのブロックを、異なる内容で複数回（かつランダムに）実行したい場合に非常に強力な機能が「タイムライン変数（timeline_variables）」です。
+  - `timeline` プロパティを持つオブジェクトに `timeline_variables` プロパティを追加し、そこに実行したい各試行のデータを配列として定義します。
+  - そして、`timeline` プロパティ内のブロック定義で `jsPsych.timelineVariable('変数名')` を使うことで、`timeline_variables` から対応する値を取得して表示内容を動的に変更します。
+  - この `timeline_variables` に `randomize_order: true` オプションを追加することで、`timeline_variables` の配列の順序がランダムになり、結果として、それぞれの質問項目がランダムな順序で表示されることになります。これは、多項目の尺度をランダム化する際の推奨される設計パターンです。
+
+<div style="page-break-before:always"></div>
+
+```javascript
+// 例：timeline_variables を使って質問の順番をランダムにする
+const scale_options_for_multi_choice = [ // このスケールは共有されるので外に定義
+    '0%', '10%', '20%', '30%', '40%', '50%',
+    '60%', '70%', '80%', '90%', '100%'
+];
+
+const randomized_conspiracy_questions_set = {
+    timeline: [ // ここには、テンプレートとなる単一のブロック定義が入る
+        {
+            type: jsPsychSurveyMultiChoice,
+            questions: [
+                {
+                    prompt: jsPsych.timelineVariable('prompt_text'), // timeline_variablesから動的にプロンプトを取得
+                    options: scale_options_for_multi_choice, // 定義済みのスケールオプションを使用
+                    name: jsPsych.timelineVariable('item_name'), // timeline_variablesから動的に名前を取得
+                    required: true
+                }
+            ],
+            button_label: '次へ'
+        },
+    ],
+    timeline_variables: [ // ここに、各試行でテンプレートに渡したいデータを定義
+        { 
+            prompt_text: '私は、大衆には決して知らされない、とても重大なことが世界で数多く起きていると思う。', 
+            item_name: 'conspiracy_item1' 
+        },
+        { 
+            prompt_text: '私は、政治家はふつう、自分たちの意思決定の本当の動機を教えてはくれないと思う。', 
+            item_name: 'conspiracy_item2' 
+        },
+        { 
+            prompt_text: '私は、政府当局が、全ての市民を厳重に監視していると思う。', 
+            item_name: 'conspiracy_item3' 
+        },
+        { 
+            prompt_text: '私は、表面的には関連のない出来事が、しばしば秘密の活動の結果であると思う。', 
+            item_name: 'conspiracy_item4' 
+        },
+        { 
+            prompt_text: '私は、政治的な決定に強い影響力を与える秘密の組織が存在すると思う。', 
+            item_name: 'conspiracy_item5' 
+        }
+    ],
+    randomize_order: true // このオプションにより、timeline_variablesの順序がランダムになる
+};
+timeline.push(randomized_conspiracy_questions_set); // タイムラインに追加
+```
+
+- **注意点:** `randomize_order: true` を設定する際は、それが `timeline` の直下の子要素のシャッフルを意図しているのか、それとも `timeline_variables` 内の試行のシャッフルを意図しているのかを明確に意識しましょう。今回のように、同じ構造のブロックを内容だけ変えてシャッフルしたい場合は、`timeline_variables` を使うのが効果的です。
+- **演習2-2: 陰謀論信念尺度の項目を `timeline_variables` でランダム化する**
+  - 新しい `script.js` 内で、陰謀論信念尺度の5項目を、上記例のように `timeline_variables` と `randomize_order: true` を組み合わせる形で実装してください。
+  - `timeline` 内には、`jsPsych.timelineVariable('prompt_text')` や `jsPsych.timelineVariable('item_name')` を使うテンプレートとなるブロック定義を一つだけ置いてください。
+  - Live Serverで何度も実行し、尺度の項目（「私は、大衆には決して知らされない...」など）の表示順が実行するたびに変わることを確認してみましょう。
+
+<div style="page-break-before:always"></div>
+
+## 3. ブロック化（関数の利用）
+
+実験や調査のコードを書いていると、同じような構造のブロックを何度も作成することがあります。例えば、似たような質問文のパターンを持つ質問を多数作成する場合などです。このような場合、JavaScriptの「**関数**」としてブロックの定義をまとめることで、コードをより簡潔に、読みやすく、そして再利用しやすくすることができます。これを「ブロック化」と呼びます。
+
+### 関数の定義と利用
+
+関数は、特定の処理をまとめて名前を付けたものです。引数（ひきすう）を使うことで、関数に渡す値を変えるだけで、異なる内容のブロックを生成できます。
+
+```javascript
+// 例：汎用的な多肢選択質問ブロックを作成する関数
+// promptText: 質問文
+// optionsArray: 選択肢の配列
+// nameId: データとして保存されるときの名前
+function createMultiChoiceQuestion(promptText, optionsArray, nameId) {
+    return { // この関数はjsPsychのブロックオブジェクトを返します
+        type: jsPsychSurveyMultiChoice,
+        questions: [{
+            prompt: promptText,
+            options: optionsArray,
+            name: nameId,
+            required: true // 回答必須とします
+        }],
+        button_label: '次へ' // ボタンのラベルも共通化
+    };
+}
+
+// この関数を使って質問ブロックを作成してみましょう
+// 好きな食べ物に関する質問
+const fav_food_q = createMultiChoiceQuestion(
+    '好きな食べ物を一つ選んでください:', ['カレー', 'ラーメン', '寿司', 'パスタ'],  'favorite_food'
+);
+
+// 好きな動物に関する質問
+const fav_animal_q = createMultiChoiceQuestion(
+    '好きな動物を一つ選んでください:', ['犬', '猫', 'うさぎ', '鳥'], 'favorite_animal'
+);
+
+// 全体のタイムラインに追加
+timeline.push(fav_food_q);
+timeline.push(fav_animal_q);
+```
+
+- `function createMultiChoiceQuestion(...)`: これが関数定義で `promptText`、`optionsArray`、`nameId` という3つの引数を受け取ります。
+- `return {...}`: この関数は、jsPsychのブロックとしてそのまま使えるオブジェクトを返します。
+- **メリット:**
+  - **コードの簡潔化**: 同じコードを何度も書く手間が省けます。
+  - **可読性の向上**: 関数の名前を見るだけで、そのブロックが何をするのかが分かりやすくなります。
+  - **保守性の向上**: もしブロックの共通部分を変更したい場合、関数の定義を一度修正するだけで、その関数を使っているすべてのブロックに反映されます。
+
+<div style="page-break-before:always"></div>
+
+- **演習3-1: 陰謀論信念尺度の項目を関数でブロック化し、jsPsychSurvey (Rating) で実装する**
+  - これまでの演習で `timeline_variables` を使うことで、同じ構造の質問をランダムに表示できることを学びました。ここでは、さらに一歩進んで、質問の内容（`prompt` や `name` など）だけでなく、質問のタイプ（Rating質問の具体的な設定）も関数を使って共通化し、`jsPsychSurvey` プラグインで陰謀論信念尺度を実装する例を見てみましょう。
+  - `jsPsychSurvey` の `Rating` 質問タイプは、SurveyJSのJSON形式で定義されます。このJSONの一部を関数で生成することで、複数の `Rating` 質問を効率的に記述できます。
+
+```javascript
+// 演習3-1の例：jsPsychSurvey の Rating質問のJSON定義を生成する関数
+// 関数の引数は以下の通り
+//   questionTitle: 質問文
+//   questionName: データとして保存されるときの名前
+//   minDesc, maxDesc: 尺度の一番左と一番右のラベル
+//   rateCount: 評価段階の数
+//   rateValues: 内部的な評価値の配列（例: [1, 2, 3, 4, 5]）
+
+function createSurveyJSRatingElement(questionTitle, questionName, minDesc, maxDesc, 
+    rateCount, rateValues) {
+    return {
+        "type": "rating", // Rating質問タイプ
+        "name": questionName,
+        "title": questionTitle,
+        "minRateDescription": minDesc,
+        "maxRateDescription": maxDesc,
+        "rateCount": rateCount,
+        "rateValues": rateValues,
+        "isRequired": true // 回答必須
+        "displayMode": "buttons", // ボタンを水平にする
+    };
+}
+
+// 尺度の共通設定
+const min_rating_desc = "0%";
+const max_rating_desc = "100%";
+const rate_count_val = 11;
+const rate_values_val = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; // 0-100% の10%刻み
+
+// 陰謀論信念尺度の各項目を定義（timeline_variablesに渡すデータ）
+const conspiracy_items_for_surveyjs = [
+    createSurveyJSRatingElement(
+        '私は、大衆には決して知らされない、とても重大なことが世界で数多く起きていると思う。',
+        'conspiracy_item1_rating',
+        min_rating_desc, max_rating_desc, rate_count_val, rate_values_val
+    ),
+    createSurveyJSRatingElement(
+        '私は、政治家はふつう、自分たちの意思決定の本当の動機を教えてはくれないと思う。',
+        'conspiracy_item2_rating',
+        min_rating_desc, max_rating_desc, rate_count_val, rate_values_val
+    ),
+    createSurveyJSRatingElement(
+        '私は、政府当局が、全ての市民を厳重に監視していると思う。',
+        'conspiracy_item3_rating',
+        min_rating_desc, max_rating_desc, rate_count_val, rate_values_val
+    ),
+    createSurveyJSRatingElement(
+        '私は、表面的には関連のない出来事が、しばしば秘密の活動の結果であると思う。',
+        'conspiracy_item4_rating',
+        min_rating_desc, max_rating_desc, rate_count_val, rate_values_val
+    ),
+    createSurveyJSRatingElement(
+        '私は、政治的な決定に強い影響力を与える秘密の組織が存在すると思う。',
+        'conspiracy_item5_rating',
+        min_rating_desc, max_rating_desc, rate_count_val, rate_values_val
+    )
+];
+
+// このJSON要素の配列 conspiracy_items_for_surveyjs を jsPsychSurvey ブロックに渡して表示
+// 配列は survey_json の中の elements 要素として渡される
+
+const randomized_conspiracy_survey_rating_block = {
+    type: jsPsychSurvey,
+    survey_json: { // ここに直接SurveyJSのJSON構造を定義
+        title: `
+            以下のそれぞれの文章について、あなた自身の意見として、その内容がどの程度
+            正しいと思うかを、以下のスケールに従って示してください。
+        `,
+        description: `
+            この問題に、客観的に見た正解や不正解はありませんので、あなた自身の個人的
+            な意見をお聞かせください。尺度のスケール: 0% - 100% まで 10% 刻み
+        `,
+        elements: conspiracy_items_for_surveyjs, // 関数で生成した質問要素の配列を渡す
+        showCompletedPage: false, // jsPsychのon_finishで処理するため完了ページは表示しない
+        completeText: "次へ", // ボタンラベル
+    },
+};
+
+// このブロックをタイムラインに追加
+timeline.push(randomized_conspiracy_survey_rating_block);
+```
+
+- **ポイント:**
+  - `createSurveyJSRatingElement` 関数は、`jsPsychSurvey` の `elements` プロパティに渡すための、個々の質問のJSONオブジェクトを生成します。これにより、同じRatingスケール設定を持つ複数の質問を効率的に作成できます。
+  - `conspiracy_items_for_surveyjs` という配列に関数で生成した質問要素を格納し、これを `randomized_conspiracy_survey_rating_block` の `survey_json.elements` に渡しています。
+  - **注:** `jsPsychSurvey` の内部で `elements` 配列の質問順序をランダムにしたい場合は、`"questionsOrder": "random"` のようなSurveyJSのオプションを`survey_json` 内に追加するか、 `conspiracy_items_for_surveyjs` 配列をJavaScript側でシャッフルしてから渡す必要があります。 `randomize_order: true` はjsPsych のタイムラインレベルの並べ替えなので、この `jsPsychSurvey` ブロック自体の順序には影響しますが、その内部の `elements` 配列の順序には直接は影響しません。今回の演習ではシャッフルは扱わず、単に **「関数を使って、`Rating` 質問を複数定義できる」** という点に焦点を当てます。
+- 関数化することで、コードが大幅に短く、かつ変更に強くなったことを実感してください。
+
+## 4. トータルでの作成（実践）
+
+これまでに学んだ、様々なプラグインの使い方、タイムラインの階層構造、順序のシャッフル、そしてブロック化（関数の利用）の知識をすべて組み合わせて、より実践的な心理学調査・実験のプロトタイプを`script.js`として完成させましょう。
+
+### 目標とする実験フロー
+
+1.  **インフォームドコンセント**: `jsPsychInstructions` を使用。
+2.  **個人属性の質問**: 性別、年齢、国籍（またはその他の簡単な質問）を尋ねます。
+    * `jsPsychSurveyMultiChoice` と `jsPsychSurveyText` を使用。
+    * これらを一つのネストされたタイムラインにまとめると、より整理されます。
+3.  **尺度教示**: 陰謀論信念尺度に入る前の説明。`jsPsychInstructions` を使用。
+4.  **陰謀論信念尺度（比較演習）**:
+    * 今回は、**`jsPsychSurveyMultiChoice` (`timeline_variables`によるランダム化版) と `jsPsychSurveyLikert` または `jsPsychSurvey` (Rating)** の両方を使って、同じような尺度（例として「感情評価尺度」）を実装し、その比較を実践してみましょう。
+    * まず、陰謀論信念尺度（または感情評価尺度）を`jsPsychSurveyMultiChoice` (`timeline_variables`適用) で実装し、ランダム化と関数化を適用します。
+    * 次に、**同じ尺度の項目を、`jsPsychSurveyLikert` または `jsPsychSurvey` (Rating) のどちらかの方式を選択して実装**し、タイムラインに追加してみましょう。
+    * 両方の尺度ブロックをタイムラインに追加し、それぞれの表示とデータの違いを確認します。
+    * **演習2-2（シャッフル）** で学んだ内容を適用し、**項目がランダムな順序で表示される**ように設定します。
+    * **演習3-1（ブロック化）** で学んだ関数を使い、コードを整理します。
+5.  **終了画面**: 実験終了のメッセージ。`jsPsychHtmlKeyboardResponse` を使用。
+
+### 演習4-1: 総合的な`script.js`の完成
+
+* 新しい `script.js` に、これまでの演習で学んだ内容をすべて適用し、上記の目標とする実験フローを再現するコードを記述してみましょう。
+* 特に、**陰謀論信念尺度の部分について、`jsPsychSurveyMultiChoice` (`timeline_variables`適用) 版に加えて、`jsPsychSurveyLikert`版、または`jsPsychSurvey` (Rating) 版のどちらか一つを選択して実装し、タイムラインに追加**してみてください。
+* 関数化され、かつランダムな順序で表示されることを確認してください。
+* Live Serverで実行し、期待通りに実験が進行するか、全ての質問が表示されるかを確認しましょう。
+* もしエラーが出たら、ブラウザの**開発者ツール（Consoleタブ）**を確認し、エラーメッセージを参考に修正を試みてください。
+
+**ヒント**:
+* `timeline.push(...)` の順番が、ブロックの実行順になります。
+* 必要なプラグインファイル（`plugin-instructions.js`、`plugin-html-keyboard-response.js`、`plugin-survey-text.js`、`plugin-survey-multi-choice.js`、`plugin-survey-likert.js`、`plugin-survey.js` など）が`index.html`にすべて読み込まれていることを再確認してください。
+
+
+---
+
+## 5. データの確認とダウンロード
+
+実験や調査の最も重要な成果は、参加者から得られたデータです。jsPsychは、参加者の回答や反応時間などのデータを自動的に収集し、ブラウザ上で表示したり、CSVファイルとして簡単にダウンロードしたりする機能を持っています。
+
+### 5-1. `jsPsych.data.displayData()` の確認
+
+* 第1回で既に体験したように、実験が終了すると、`initJsPsych`の`on_finish`関数で指定した`jsPsych.data.displayData()`によって、ブラウザ画面に取得されたデータが表示されます。
+* 表示されるデータは**JSON形式**（JavaScriptのオブジェクト形式）で、各試行の情報が詳細に記録されています。この形式はプログラミングで扱いやすいですが、人間が直接見て分析するには少し複雑かもしれません。
+
+### 5-2. データをCSV形式でダウンロードする
+
+心理学研究では、データを表計算ソフト（Microsoft ExcelやGoogleスプレッドシートなど）で分析することが多いため、CSV（Comma Separated Values）形式でダウンロードできると非常に便利です。CSV形式は、データをカンマ区切りで保存したテキストファイルで、ほとんどの表計算ソフトで開くことができます。
+
+* `initJsPsych`の`on_finish`関数を以下のように変更することで、実験終了時に自動的にCSVファイルが参加者のPCにダウンロードされるようになります。
+
+    ```javascript
+    // jsPsych のインスタンスを初期化（実験の準備）
+    const jsPsych = initJsPsych({
+        on_finish: function () {
+            jsPsych.data.displayData(); // 画面表示はコメントアウトするか削除します
+            // データをCSV形式でダウンロードする処理
+            jsPsych.data.get().localSave('csv','my_experiment_data_2.csv');
+        }
+    });
+    ```
+
+* `jsPsych.data.get().localSave()`: この関数は、jsPsychがこれまでに収集したすべての実験データをファイルに保存します。
+* `localSave()` は2つの引数をもち，1つめはファイル形式 (csv または json)，2つめはファイル名です。ここで指定されたファイル名（例: `'my_experiment_data_2.csv'`）で参加者のPCにダウンロードさせる処理を実行します。
+* なお，オンライン実験の場合は，参加者の PC にダウンロードさせるのではなく，サーバ側でデータを保存する処理が必要です。そのため，`displayData(), localSave()` ともに，基本的にはデバッグ目的で使用してください（ただし，参加者を実験室に呼んで対面で実験を行う場合などでは，`localSave()` を使うことがあります。
+
+<div style="page-break-before:always"></div>
+
+### 5-3. ダウンロードしたCSVファイルの確認
+
+* ダウンロードされた`my_experiment_data_2.csv`（または指定したファイル名）を、ExcelやGoogleスプレッドシートなどの表計算ソフトで開いてみましょう。
+* 開いたファイルを確認し、以下の点に注目してください。
+    * **各列の意味**: `trial_type`（使用されたプラグインの種類）、`rt`（反応時間）、`response`（参加者の回答内容）、`internal_node_id`（ブロックの識別子）など、様々な情報が記録されています。
+    * **回答データの確認**: 特に、各質問ブロックで`name`プロパティに指定した名前（例: `gender`, `age`, `conspiracy_item1`など）が列のヘッダーとして表示され、その下に回答内容が記録されているかを確認することが重要です。
+    * **`jsPsychSurveyLikert` と `jsPsychSurvey` (Rating) で取得されるデータの形式の違い**:
+        * `jsPsychSurveyLikert` のデータは、`response.質問のname` の形で回答が保存されます（例: `response.relax_q_likert`）。
+        * `jsPsychSurvey` (Rating) のデータは、`response.質問のname` の形で保存されますが、**その内部の構造がSurveyJSのJSON定義に基づいているため、少し複雑になることがあります。**例えば、`response.relax_q_surveyjs` のように、Ratingの結果がオブジェクト形式で保存される場合があります。CSVに変換されたときにどのように表現されるかを実際に確認し、その違いを理解しましょう。
+    * **不要な列の削除**: 多くの列がありますが、実際にデータ分析に使うのは一部の列だけかもしれません。分析に不要な列を削除する方法を学びましょう。
+    * **回答のフィルタリングやソート**: 特定の回答だけを抽出したり、回答順に並べ替えたりする基本的な操作を試してみましょう。
+
+### 演習5-1: データをCSVでダウンロードし、内容を確認する
+
+* 新しい `script.js` の `initJsPsych` の `on_finish` 関数を修正し、実験終了時にCSVファイルが自動的にダウンロードされるように変更してください。
+* Live Serverで実験を最初から最後まで実行し、ファイルがダウンロードされることを確認してください。
+* ダウンロードされたCSVファイルをExcelなどの表計算ソフトで開き、インフォームドコンセントの同意、性別、年齢、そして陰謀論信念尺度の各項目に対する回答が正しく記録されているかを確認してみましょう。
+* **特に、`jsPsychSurveyLikert`と`jsPsychSurvey` (Rating) で作成した質問の回答が、CSV上でどのように表示されるかを確認し、その違いを理解することが重要ですす。**
+* 時間があれば、不要な列を削除したり、回答をフィルタリングしたりする基本的なデータ整理の練習をしてみましょう。
+
+**補足**: 実際の研究では、データを直接ウェブサーバーに保存する（サーバーサイドスクリプトを使う）方法や、jsPsychのデータをより高度に加工・整形する方法など、さらに発展的な技術があります。しかし、まずはCSVでのダウンロードと内容確認を確実にマスターしましょう。
