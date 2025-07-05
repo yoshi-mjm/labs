@@ -1,0 +1,475 @@
+---
+title: "jsPsych 演習: 第1回"
+toc: true
+format:
+    html:
+        theme: "flatly"
+        embed-resources: true
+        highlight-style: tango
+---
+
+# jsPsych を使って心理学の調査・実験を作ってみよう！
+
+## 1. jsPsych って何？
+
+心理学の調査や実験、みなさんはどんなイメージがありますか？紙のアンケート、コンピュータを使った反応時間の測定、脳波の計測…いろいろありますよね。
+
+**jsPsych** は、そんな心理学の調査や実験を**ウェブサイト上で作れる**ようにするための、特別な道具（**ライブラリ**と呼びます）です。
+
+「プログラミングって難しそう…」と思うかもしれませんね。でも安心してください！jsPsych を使えば、**難しいプログラミングの知識がなくても、簡単なコードを書くだけで、本格的な心理学の調査や実験が作れるようになります。**
+
+### jsPsych を使うと、こんな良いことがあります！
+
+* **誰でもどこでも参加できる！**
+    インターネットにつながっていれば、パソコンでもタブレットでも、どこからでも調査や実験に参加してもらえます。大学に来てもらわなくても、自宅で実施できるので、たくさんの人に協力してもらいやすくなります。
+* **正確な時間測定ができる！**
+    反応時間など、ミリ秒単位の正確な時間測定が必要な実験も、jsPsych ならバッチリ対応できます。心理学の実験では、こうした正確さがとても大切なんです。
+* **複雑な調査・実験も作れる！**
+    質問の順番をランダムに変えたり、参加者の回答に応じて次に表示する質問を変えたり、画像や音を使った実験も自由自在です。
+
+今日のゴールは、jsPsych を使って**簡単な質問票を自分で作り、パソコンで動かしてみる**ことです。一緒に楽しく学んでいきましょう！
+
+---
+
+## 2. 開発環境を整えよう！
+
+jsPsych で調査・実験を作るためには、いくつかの準備が必要です。難しそうに聞こえるかもしれませんが、ひとつずつ一緒にやっていきましょう！
+
+### 2-1. Visual Studio Code (VS Code) をインストールしよう
+
+VS Code は、プログラミングをするための「**高機能なメモ帳**」のようなものです。これを使うと、コードがとても書きやすくなります。
+
+1. **ダウンロードサイトへアクセス:** 以下のVS Codeの公式サイトにアクセスしてください。[https://code.visualstudio.com/](https://code.visualstudio.com/)
+2. **ダウンロード:** 使っているパソコンのOS（Windows、macOSなど）に合わせて、ダウンロードボタンをクリックします。
+3. **インストール:** ダウンロードしたファイルをダブルクリックして、画面の指示に従ってインストールを進めてください。特に難しい設定は必要ありません。「次へ」「同意する」「インストール」などをクリックしていけばOKです。
+   - *Macの場合: アプリケーションフォルダにドラッグ&ドロップするだけです。*
+4. **日本語化 (任意):** VS Code を起動して，英語表示になっていたら日本語に切り替えましょう。
+    * 左側の四角が並んだアイコン（**拡張機能**）をクリックします。
+    * 検索窓に「**Japanese Language Pack for Visual Studio Code**」と入力して検索します。
+    * 表示された拡張機能の「**Install**」ボタンをクリックします。
+    * インストール後、VS Code の再起動を求められるので、再起動します。
+
+### 2-2. Live Server をインストールしよう
+
+作った調査や実験をウェブブラウザで確認するために、「**Live Server**」という便利な機能を使います。これは、VS Code の「**拡張機能**」として追加できます。
+
+1. **拡張機能を開く:**: VS Code の左側にある四角が並んだアイコン（**拡張機能**）をクリックします。
+2. **Live Server を検索:**: 検索窓に「**Live Server**」と入力して検索します。
+3. **インストール:**: 表示された「**Live Server**」の拡張機能の「**Install**」ボタンをクリックします。これで準備完了です！
+
+### 2-3. ブラウザを準備しよう
+
+jsPsych で作ったものは、ウェブブラウザ（Google Chromeなど）で動かします。特に指定がなければ、**Google Chrome** を使うのがおすすめです。開発者向けの便利な機能がたくさん搭載されています。
+
+もしGoogle Chromeが入っていない場合は、以下のサイトからダウンロードしてインストールしておきましょう。
+
+[https://www.google.com/intl/ja_jp/chrome/](https://www.google.com/intl/ja_jp/chrome/)
+
+### 2-4. jsPsych のファイルをダウンロードしよう
+
+jsPsych のライブラリと必要なプラグインをダウンロードして、VS Code で使えるようにします。
+
+1. **jsPsych のダウンロード:** 以下のリンクから、jsPsych の最新バージョンをダウンロードします。[https://github.com/jspsych/jsPsych/releases/tag/jspsych%407.3.4](https://github.com/jspsych/jsPsych/releases/tag/jspsych%407.3.4) 
+   
+2. **ファイルを解凍:** ダウンロードした ZIP ファイルを解凍します。解凍すると、jsPsych のフォルダができます。ただし，このままでは使うのに不便なので、必要なファイルだけを取り出します。具体的には，dist フォルダの中にあるファイルのみを使います。dist フォルダの中には、jsPsych の本体やプラグインが含まれていますので，このフォルダを jsPsych フォルダとして保存します。保存先は，VS Code でプログラムを作成するフォルダとします。
+
+---
+
+これで、jsPsych で調査・実験を作るための基本的な準備は完了です！
+次は、実際にjsPsychの基本的な構造を見て、簡単な質問票を作ってみましょう。
+
+## 3. jsPsych の基本構造を理解しよう！
+
+jsPsych を使って心理学の調査や実験を作成する際、主に3つの種類のファイルが連携して動作します。それぞれのファイルが異なる役割を持っています。
+
+1.  **HTMLファイル (`index.html`)**: ウェブページの「骨格」を作るファイルです。jsPsych ライブラリ本体、必要なプラグイン、そして皆さんが書く JavaScript のコードを読み込む役割を担います。
+2.  **JavaScriptファイル (`script.js`)**: 調査や実験の「流れ」を記述するファイルです。どんな質問をどんな順番で表示するかといった、実験のロジックはすべてここに記述します。可読性を高めるため、このファイルを独立させます。
+3.  **CSSファイル (`style.css`)**: ページの「見た目」を整えます。文字の大きさや色、要素の配置などをここで定義します。今回は、シンプルな表示を目的としたテンプレートとして提供します。
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsPsych 演習</title>
+    <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="jspsych-display"></div>
+
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-instructions.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
+    <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+```
+
+<div style="page-break-before:always"></div>
+
+### 3-1. JavaScriptファイル (`script.js`) の構成
+
+このファイルに、実験や調査の内容（質問文、選択肢、表示順序等）の**ロジック**を記述します。
+
+* **`initJsPsych({...})`**:
+    * jsPsych の動作を開始するための**初期設定**を行います。
+    * `on_finish`: 実験がすべて完了した後に実行される関数を定義します。例えば、取得した実験データをブラウザの画面に表示したり、CSV形式でダウンロードさせたりする処理をここに記述します。
+* **`const timeline = [];`**:
+    * これは、実験で表示する各要素（教示、質問など）を順番に並べるための**リスト（配列）**です。このリストに「**ブロック**」を追加していくことで、実験の流れを定義します。
+* **各 `const informed_consent = {...}` や `const age_question = {...}` など**:
+    * これら一つ一つが「**ブロック**」と呼ばれるものです。`type` プロパティで、どの**プラグイン**（特定の機能を持つ部品）を使用するかを指定し、`stimulus` や `questions` といったプロパティで、そのブロックの具体的な表示内容や動作を設定します。
+* **`timeline.push(informed_consent);`**:
+    * 作成したブロックを `timeline` のリストの最後に追加します。この順序が、実験の実行順序になります。
+* **`jsPsych.run(timeline);`**:
+    * `timeline` に定義されたすべてのブロックを実行し、jsPsych の実験を動かします。
+
+```javascript
+// jsPsych のインスタンスを初期化し、実験の全体的な設定を行います。
+const jsPsych = initJsPsych({
+    // on_finishは、すべての実験トライアルが終了したときに実行される関数です。
+    // ここでは、取得した実験データをブラウザに表示するように設定しています。
+    on_finish: function() {
+        jsPsych.data.displayData(); // 実験データをブラウザ画面に表示します。
+        // データをCSV形式でダウンロードしたい場合は、以下のコメントを解除して使用します。
+        // const csv = jsPsych.data.get().csv();
+        // jsPsych.downloadCSV(csv, 'experiment-data.csv');
+    }
+});
+
+// 実験のタイムラインを定義します。タイムラインは、実行される「ブロック」の順序を決定するリストです。
+const timeline = [];
+
+// --- 1. インフォームドコンセントブロック ---
+const informed_consent = {
+    type: jsPsychInstructions, // instructions プラグインを使用
+    pages: [ // 複数のページを作成できます
+        `
+        <h2>調査へのご協力のお願い</h2>
+        <p>この度は、本調査にご参加いただきありがとうございます。</p>
+        <p>本調査は、人々の意見や信念に関する研究を目的としています。
+        あなたの回答は、統計的に処理され、個人が特定できる形で公開されることは
+        一切ありません。</p>
+        <p>調査にかかる時間は約5分です。</p>
+        <p>ご参加は完全に任意であり、途中でいつでも中断することができます。
+        中断した場合でも、あなたに不利益が生じることはありません。</p>
+        <p>本調査に関してご不明な点がありましたら、担当者にお尋ねください。</p>
+        `,
+        `
+        <p>上記の調査内容について理解し、本調査に自らの意思で参加することに
+        同意しますか？</p>
+        <p><b>同意する場合は「次へ」ボタンを、同意しない場合はブラウザを閉じて
+        ください。</b></p>
+        `
+    ],
+    button_label_next: '次へ', // 次のページへ進むボタンのラベル
+    button_label_previous: '戻る', // 前のページへ戻るボタンのラベル
+    show_clickable_nav: true // ボタンでページを移動できるようにする
+};
+timeline.push(informed_consent); // 作成したインフォームドコンセントブロックをタイムラインに追加
+
+// --- 2. 個人属性の質問ブロック ---
+
+// 性別の質問
+const gender_question = {
+    type: jsPsychSurveyMultiChoice, // 複数選択形式の質問プラグイン
+    questions: [
+        {
+            prompt: 'あなたの性別を選択してください。', // 質問文
+            options: ['男性', '女性', 'その他', '回答したくない'], // 選択肢
+            name: 'gender', // 回答データを識別するための名前
+            required: true // 回答必須にする
+        }
+    ],
+    button_label: '次へ進む', // 次のページへ進むボタンのラベル
+};
+timeline.push(gender_question);
+
+// 年齢の質問
+const age_question = {
+    type: jsPsychSurveyText, // テキスト入力形式の質問プラグイン
+    questions: [
+        {
+            prompt: 'あなたの年齢を入力してください。', // 質問文
+            placeholder: '例: 20', // 入力フィールドの例示テキスト
+            name: 'age', // 回答データを識別するための名前
+            required: true // 回答必須にする
+        }
+    ],
+    button_label: '次へ進む',
+};
+timeline.push(age_question);
+
+// --- 3. 尺度教示ブロック ---
+const scale_instructions = {
+    type: jsPsychInstructions, // instructions プラグインを使用
+    pages: [
+        `
+        <h2>以下のそれぞれの文章について、あなた自身の意見として、その内容が
+        どの程度正しいと思うかを、以下のスケールに従って示してください。</h2>
+        <p>この問題に、客観的に見た正解や不正解はありませんので、あなた自身の
+        個人的な意見をお聞かせください。</p>
+        <p><b>尺度のスケール: 0% - 100% まで 10% 刻みの11件法リッカート
+        尺度</b></p>
+        `
+    ],
+    button_label_next: '回答を始める', // 次のページへ進むボタンのラベル
+    button_label_previous: '戻る', // 前のページへ戻るボタンのラベル
+    show_clickable_nav: true // ボタンでページを移動できるようにする
+};
+timeline.push(scale_instructions);
+
+// --- 4. 尺度項目の質問ブロック ---
+
+// 尺度のスケールを定義
+const scale_options = [
+    '0%', '10%', '20%', '30%', '40%', '50%',
+    '60%', '70%', '80%', '90%', '100%'
+];
+
+// 尺度項目1
+const item1 = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+        {
+            prompt: '私は、大衆には決して知らされない、とても重大なことが世界で数多く起きていると思う。',
+            options: scale_options,
+            name: 'conspiracy_item1',
+            required: true
+        }
+    ],
+    randomize_question_order: false, // 質問順序のランダム化は行わない
+    button_label: '次へ',
+};
+timeline.push(item1);
+
+// 尺度項目2
+const item2 = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+        {
+            prompt: '私は、政治家はふつう、自分たちの意思決定の本当の動機を教えてはくれないと思う。',
+            options: scale_options,
+            name: 'conspiracy_item2',
+            required: true
+        }
+    ],
+    randomize_question_order: false,
+    button_label: '次へ',
+};
+timeline.push(item2);
+
+// 尺度項目3
+const item3 = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+        {
+            prompt: '私は、政府当局が、全ての市民を厳重に監視していると思う。',
+            options: scale_options,
+            name: 'conspiracy_item3',
+            required: true
+        }
+    ],
+    randomize_question_order: false,
+    button_label: '次へ',
+};
+timeline.push(item3);
+
+// 尺度項目4
+const item4 = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+        {
+            prompt: '私は、表面的には関連のない出来事が、しばしば秘密の活動の結果であると思う。',
+            options: scale_options,
+            name: 'conspiracy_item4',
+            required: true
+        }
+    ],
+    randomize_question_order: false,
+    button_label: '次へ',
+};
+timeline.push(item4);
+
+// 尺度項目5
+const item5 = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+        {
+            prompt: '私は、政治的な決定に強い影響力を与える秘密の組織が存在すると思う。',
+            options: scale_options,
+            name: 'conspiracy_item5',
+            required: true
+        }
+    ],
+    randomize_question_order: false,
+    button_label: '次へ',
+};
+timeline.push(item5);
+
+// --- 5. 実験終了ブロック ---
+const end_screen = {
+    type: jsPsychHtmlKeyboardResponse, // 終了画面
+    stimulus: `
+        <p>質問票は以上で終了です。ご協力ありがとうございました。</p>
+        <p>このウィンドウは閉じていただいて構いません。</p>
+    `,
+    choices: "NO_KEYS", // キー入力では次へ進まない
+    trial_duration: 3000 // 3秒後に自動的に画面が消える（on_finishが実行される）
+};
+timeline.push(end_screen);
+
+// すべてのブロックが定義されたタイムラインを実行して、実験を開始します。
+jsPsych.run(timeline);
+```
+---
+
+### 3-2. CSSファイル (`style.css`) の構成
+
+このファイルでは、jsPsych の表示領域を画面の中央に配置し、画面サイズに対して大きくなりすぎないように調整する**見た目のスタイル**を設定します。今回は、このスタイルシートの詳細な解説は行いませんので、**以下のコードをそのままコピー＆ペーストして使用してください。**
+
+* `body` と `#jspsych-display` のスタイル設定により、コンテンツが画面の**中央に配置**され、**最大でも画面の幅と高さの90%に収まる**ように調整されます。
+* `overflow: auto;` プロパティによって、もしコンテンツがこの90%の領域を超えてしまった場合でも、自動的にスクロールバーが表示されるため、内容が隠れる心配がありません。
+* その他のスタイルは、文字のフォント、色、ボタンのデザインなど、基本的な表示を整えるためのものです。
+
+```css
+/* style.css */
+
+/* jsPsychの表示領域全体の設定 */
+body {
+    display: flex; /* Flexbox を使って要素を配置 */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    min-height: 100vh; /* 画面全体の高さを使用 */
+    margin: 0; /* body の余白をなくす */
+    background-color: #f0f0f0; /* 背景色を設定 */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* フォントの指定 */
+    color: #333; /* 文字色 */
+}
+
+/* jsPsychのコンテンツが実際に表示される部分（id="jspsych-display"） */
+#jspsych-display {
+    max-width: 90vw; /* 画面幅の90%が最大幅 */
+    max-height: 90vh; /* 画面高さの90%が最大高さ */
+    width: 100%; /* 親要素の幅に合わせて伸びる */
+    height: 100%; /* 親要素の高さに合わせて伸びる */
+    overflow: auto; /* 内容がはみ出したらスクロールできるようにする */
+    background-color: #fff; /* 背景色 */
+    padding: 20px; /* 内側の余白 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影 */
+    border-radius: 8px; /* 角を丸くする */
+    box-sizing: border-box; /* paddingやborderを幅・高さに含める */
+}
+
+/* jsPsychが自動生成するコンテンツのスタイル調整 */
+.jspsych-content {
+    text-align: center; /* テキストを中央揃え */
+    margin-bottom: 20px; /* 下に余白 */
+}
+
+/* 質問文のスタイル */
+.jspsych-stimulus {
+    font-size: 1.2em; /* フォントサイズを少し大きく */
+    margin-bottom: 25px; /* 下に余白 */
+    line-height: 1.5; /* 行の高さ */
+}
+
+/* 入力フィールドのスタイル */
+.jspsych-survey-text input[type="text"] {
+    width: 80%; /* 幅 */
+    padding: 10px; /* 内側の余白 */
+    margin-top: 10px; /* 上に余白 */
+    font-size: 1em; /* フォントサイズ */
+    border: 1px solid #ccc; /* 枠線 */
+    border-radius: 4px; /* 角を丸くする */
+}
+
+/* ボタンのスタイル */
+.jspsych-btn {
+    background-color: #007bff; /* ボタンの背景色 */
+    color: white; /* 文字色 */
+    padding: 10px 20px; /* 内側の余白 */
+    border: none; /* 枠線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    cursor: pointer; /* マウスカーソルを指マークに */
+    font-size: 1em; /* フォントサイズ */
+    margin-top: 20px; /* 上に余白 */
+    transition: background-color 0.3s ease; /* ホバー時のアニメーション */
+}
+
+.jspsych-btn:hover {
+    background-color: #0056b3; /* ホバー時の背景色 */
+}
+
+/* その他、必要に応じて追加 */
+.jspsych-instructions {
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+```
+
+---
+
+<div style="page-break-before:always"></div>
+
+### 3-3. ファイルの準備方法
+
+実際にこれらのファイルを使ってjsPsychの実験を動かすために、以下の手順でファイルを準備してください。
+
+1.  まず、ご自身のPCの好きな場所に**新しいフォルダ**を作成してください。フォルダ名は、例えば `jspsych_my_project` など、分かりやすい名前にしましょう。
+2.  作成したフォルダの中に、**`index.html`、`script.js`、`style.css` という名前の新しいファイルを作成**します。これらのファイルには、既に以前お伝えしたそれぞれのコードをコピー＆ペーストして保存してください。
+3.  **jsPsych のライブラリファイル**をダウンロードし、プロジェクトフォルダ内に配置します。
+    * jsPsych の公式サイト（[https://www.jspsych.org/download/](https://www.jspsych.org/download/)）から最新版の jsPsych をダウンロードしてください。
+    * ダウンロードした `jspsych-X.X.X.zip` (X.X.Xはバージョン番号) という圧縮ファイルを解凍します。
+    * 解凍してできたフォルダの中に、`jspsych.js` や `plugin-html-keyboard-response.js` などのファイルが格納されている `jspsych` という名前のフォルダがあるはずです。この**`jspsych`フォルダ全体を、先ほど作成したプロジェクトフォルダ（例: `jspsych_my_project`）の中にそのままコピー**してください。
+4.  最終的なフォルダ構造は以下のようになります。
+
+    ```
+    jspsych_my_project/
+        ├── index.html       <- 皆さんが作成したHTMLファイル
+        ├── script.js        <- 皆さんが作成したJavaScriptファイル
+        ├── style.css        <- 皆さんが作成したCSSファイル
+        └── jspsych/         <- ダウンロードしたjsPsychライブラリのフォルダ
+            ├── jspsych.js
+            ├── plugin-html-keyboard-response.js
+            ├── plugin-survey-text.js
+            ├── css/
+            │   └── jspsych.css
+            └── ... (その他のプラグインやファイル)
+    ```
+
+これで、jsPsych で簡単な質問票を作成・実行するための基本的な環境が整いました。
+準備はできましたか？
+
+---
+<div style="page-break-before:always"></div>
+
+## 4. jsPsych を使って心理尺度の質問票を作ってみよう
+
+これまでの学習を踏まえて，jsPsych を使って心理尺度の質問票を作成してみましょう。作成するのは，心理学ではとても有名な自尊感情尺度です。
+
+### 4-1. 自尊感情尺度とは？
+自尊感情尺度（Rosenberg Self-Esteem Scale, RSES）は、
+自分自身に対する評価や感情を測定するための心理尺度です。
+この尺度は、個人の自尊感情を評価するために広く使用されており、
+以下のような質問が含まれています。
+
+- **教示文**: 以下には，自分自身に対する一般的な感情について書かれた文章が表示されます。それぞれの文章にどの程度同意できるかを答えてください。1 = 強くそう思わない, 2 = そう思わない, 3 = そう思う, 4 = 強くそう思う
+- **項目**
+    1. 私は，自分自身にだいたい満足している。
+    2. 時々，自分はまったくダメだと思うことがある。
+    3. 私にはけっこう長所があると感じている。
+    4. 私は，他の大半の人と同じくらいに物事がこなせる。
+    5. 私には誇れるものが大してないと感じる。
+    6. 時々，自分は役に立たないと強く感じることがある。
+    7. 自分は少なくとも他の人と同じくらい価値のある人間だ，と感じている。
+    8. 私は，自分のことを前向きに考えている。
+    9. よく，私は落ちこぼれだと思ってしまう。
+    10. 自分のことをもうすこし尊敬できたらいいと思う。
+  
+この自尊感情尺度を含み，個人属性情報として，年齢，性別に加えて，最終学歴を尋ねる質問票を作成してみましょう。
+なお，先ほど作成したサンプルプログラムとは，別のフォルダにするか，あるいはファイル名を変更して，別の名前で保存してください。
