@@ -9,6 +9,8 @@ format:
 output-dir: "docs"
 ---
 
+# 臨床心理学のための共分散構造分析 (SEM)ワークショップ
+
 ## 第2部：jamovi環境構築 ＆ 実践ハンズオン
 
 ここからは実際にPCを操作します。
@@ -20,8 +22,14 @@ output-dir: "docs"
 
 #### Step 1: SEMLj モジュールのインストール
 
-1. jamoviを起動し，右上の「＋ (モジュール)」ボタンをクリックして「jamovi library」を開きます。
+1. jamoviを起動し，右上の「＋ (モジュール)」ボタンをクリックして「jamovi ライブラリ」を開きます。
 2. 検索窓に `SEMLj` と入力し，表示されたモジュールの「Install」をクリックしてください。数秒で上部リボンメニューに「SEM」というアイコンが登場します。
+
+<figure style="text-align: center;">
+  <figcaption>Fig.4 SEMLj</figcaption>
+  <img src="./imgs/SEMLJ-01.png" alt="SEMLj" width="90%">
+</figure>
+
 
 #### Step 2: サンプルデータを開く
 
@@ -45,15 +53,15 @@ output-dir: "docs"
 
 **今回のハンズオンの目標モデル**：
 
-1960年時点の民主化の状況 (`dem60`), 工業化状況 (`ind60`)，1965年時点での民主化状況 (`dem65`) という3つの潜在変数について測定モデルをそれぞれ定義し，1960年時点の工業化・民主化状況から1965時点での民主化状況を予測できるか，また，同時代の工業化状況から民主化状況を予測できるか (`ind60` $\rightarrow$ `dem60`) を検証します。
+1960年時点の民主化の状況 (`dem60`), 工業化状況 (`ind60`)，1965年時点での民主化状況 (`dem65`) という3つの潜在変数について測定モデルをそれぞれ定義し，1960年時点の工業化・民主化状況から1965時点での民主化状況を予測できるか (`ind60` + `dem60` $\rightarrow$ `dem65`)，また，同時代の工業化状況から民主化状況を予測できるか (`ind60` $\rightarrow$ `dem60`) を検証します。
 
-まずは，この分析のモデル図を書いてみましょう。
+**まずは，この分析のモデル図を書いてみましょう。**
 
-<div style="page-break-before:always"></div>
+> **注：** 以下の作業はモデル図を書いてから行うこと
 
 ### 2. SEMLjでの分析：GUIによる変数選択式モデル構築
 
-#### SEMLj の基礎
+#### **SEMLj の基礎**
 
 メニューから SEM $\rightarrow$ `SEM (Interactive)` を選択します。
 
@@ -68,11 +76,19 @@ output-dir: "docs"
 * **Custom Model Settings**: カスタムモデル設定。GUI で指定できないモデルパラメータの指定。lavann シンタックス形式
 * **Model Options**: モデルのオプション。推定方法や欠損値の扱いなど
 * **Parameters Options**: パラメータ推定のオプション。標準誤差，信頼区間，切片，間接効果の推定など
-* **Multi-group Analysis**: 多母集団分析を行う際の等質性制約のオプション
+* **Multi-group Analysis**: 多母集団分析を行う際の等値制約のオプション
   * なお，マルチレベル分析は GUI 版の SEMLj では不可。`SEM (syntax)` を選び，lavaan シンタックスで記述する
 * **Output Options**: 追加の統計量オプション。適合度指標を標準より大目に出力するとか，分散・共分散行列を出力するとか，修正指標とか。
 
-#### Step 1: 測定モデル (Measurement)の定義
+この辺りのオプション設定は，そもそもそれが何を意味するのかをきちんと理解してからでないと使えないと思います。
+以下の書籍などを手始めに，共分散構造分析について学んでから使ってください。
+
+* 山田 剛史・村井 潤一郎・杉澤 武俊 (2015) Rによる心理データ解析. ナカニシヤ出版. [https://www.nakanishiya.co.jp/book/b208484.html](https://www.nakanishiya.co.jp/book/b208484.html)
+* 緒賀 郷志 (2019) Rによる心理・調査データ解析・第2版. 東京図書. [https://www.tokyo-tosho.co.jp/02321/](https://www.tokyo-tosho.co.jp/02321/)
+* 豊田 秀樹 (2007) 共分散構造分析［Amos編］―構造方程式モデリング―. 東京図書. [https://www.tokyo-tosho.co.jp/02008/](https://www.tokyo-tosho.co.jp/02008/)
+
+
+#### **Step 1: 測定モデル (Measurement)の定義**
 
 直接測定されていない概念 (丸)と観測データ(四角)の関係を定義します。
 
@@ -83,17 +99,29 @@ output-dir: "docs"
 3. 「Add New Latent」をクリックし，2つ目の因子名 `dem65` に `y5`, `y6`, `y7`, `y8` を割り当てる。
 4. 外生変数の最初の因子名に `ind60` と入力し，`x1`, `x2`, `x3` を割り当てる。
 
-#### Step 2: 構造モデル (Regressions)の定義
+<figure style="text-align: center;">
+  <figcaption>Fig.5 測定方程式</figcaption>
+  <img src="./imgs/SEMLJ-02.png" alt="測定方程式" width="60%">
+</figure>
+
+
+#### **Step 2: 構造モデル (Regressions)の定義**
 
 次に，「因果関係の矢印 (構造方程式)」を設定します。
 
-* Endogeneous Models メニューを展開する。
+* **Endogeneous Models** メニューを展開する。
    * 「1960年の民主化指標 (`dem60`)は，1960年の工業化指標 (`ind60`)から影響を受ける」という方程式を定義する。
-     * `Endogeneous = dem60` で `drag varible here` となっているボックスをクリックし，Define factor で `ind60` を選択し，$\rightarrow$ をクリック
+     * `Endogeneous = dem60` で `drag varible here` となっているボックスをクリックし，**Defined Factors** から `ind60` を選択し，$\rightarrow$ をクリック
    * 「1965年の民主化指標 (`dem65`)は，1960年の民主化指標 (`dem60`)と工業化指標 (`ind60`)から影響を受ける」という方程式を定義する。
-     * `Endogeneous = dem65` で `drag varible here` となっているボックスをクリックし，Define factor で `dem60` を選択し，$\rightarrow$ をクリック
-     * `Endogeneous = dem65` で `drag varible here` となっているボックスをクリックし，Define factor で `ind60` を選択し，$\rightarrow$ をクリック
+     * `Endogeneous = dem65` で `drag varible here` となっているボックスをクリックし，**Defined Factors** から `dem60` を選択し，$\rightarrow$ をクリック
+     * `Endogeneous = dem65` で `drag varible here` となっているボックスをクリックし，**Defined Factors** から `ind60` を選択し，$\rightarrow$ をクリック
      * この投入は1つずつ行うこと。2つ同時に入れると dem60 $\times$ ind60 の交互作用も投入されてしまう。交互作用が投入されしまった場合は，交互作用を選択して，$\leftarrow$ をクリックしてモデルから削除する。
+
+<figure style="text-align: center;">
+  <figcaption>Fig.6 構造方程式</figcaption>
+  <img src="./imgs/SEMLJ-03.png" alt="構造方程式" width="60%">
+</figure>
+
 
 これで，右側の画面にリアルタイムで分析結果が計算されて出力されます！
 

@@ -4194,16 +4194,16 @@ window.Quarto = {
 <p>まずは，SEMの全体像をビジュアルで理解し，分析の設計図となる「パス図」を自分の手で描けるようになりましょう。</p>
 <section id="sem-の基本" class="level3">
 <h3 class="anchored" data-anchor-id="sem-の基本">1. SEM の基本</h3>
-<p>共分散構造分析 (SEM) は，変数間の<strong>共分散</strong>（相関）をもとに，変数間の関係 (<strong>構造</strong>) を分析するモデルで，回帰分析や因子分析，パス解析などを統合する枠組みです。 共分散情報を元に，変数間の構造を統計的にモデル化することから，構造方程式モデリングとも呼ばれます (SEM の原義としては，こちらの方が正しい)。</p>
-<p>SEM において，まず覚えておいて欲しいのは，SEM はモデルありきの分析だということです。 つまり，分析に入る前に構造モデルを指定する必要があります。 そのため，分析前に，理論や仮説に基づいて，変数間の関係を事前に記述・構造化していくことが求められます。</p>
-<p>その考えたモデルと，観測データがフィットするかどうかを通じて，その構造の妥当性を検証していきます。 したがって，SEM の結果を見るときには，モデルの適合度と，個々の変数間の関係を表す係数の双方が解釈の際に重要になります。</p>
-<p>また，不可能ではないものの，データに基づいて探索的にモデルを構築していくことは通常しません。</p>
+<p>共分散構造分析 (SEM) は，変数間の <strong>共分散</strong>（相関）をもとに，変数間の関係 (<strong>構造</strong>) を分析するモデルで，回帰分析や因子分析，パス解析などを統合する枠組みです。 共分散情報を元に，変数間の構造を統計的にモデル化することから，構造方程式モデリングとも呼ばれます (SEM の原義としては，こちらの方が正しい)。</p>
+<p>SEM において，まず覚えておいて欲しいのは，SEM は <strong>モデルありきの分析</strong> だということです。 つまり，分析に入る前に構造モデルを指定する必要があります。 そのため，<strong>分析前に，理論や仮説に基づいて，変数間の関係を事前に記述・構造化していく</strong> ことが求められます。</p>
+<p>その考えたモデルと，観測データがフィットするかどうかを通じて，その構造の妥当性を検証していきます。 したがって，SEM の結果を見るときには，<strong>モデルの適合度</strong>と，<strong>個々の変数間の関係を表す係数</strong> の双方が解釈の際に重要になります。</p>
+<p>また，不可能ではないものの，データに基づいて探索的にモデルを構築していくことは推奨されません。</p>
 <blockquote class="blockquote">
 <p>モデルの改善をするための修正指標というものは出すことは可能ですが，あまり探索的にやり過ぎると，事前に立てた仮説を無視して，データに沿ったモデルを事後的に作り出すことに繋がりかねません。このような行為は，問題のある研究実践 (QRPs) の一つである HARKing に相当します。</p>
 </blockquote>
-<p>まずは，この基本原則を頭にたたき込んでおきましょう。</p>
+<p>まずは，この基本原則 (<strong>モデルファースト</strong>) を頭にたたき込んでおきましょう。</p>
 <section id="sem-の用語" class="level4">
-<h4 class="anchored" data-anchor-id="sem-の用語">SEM の用語</h4>
+<h4 class="anchored" data-anchor-id="sem-の用語"><strong>SEM の用語</strong></h4>
 <p>まずは，SEM の基本用語を覚えておきましょう。</p>
 <ul>
 <li><strong>観測変数 (Observed Variable)</strong>: 直接測定された変数
@@ -4217,17 +4217,17 @@ window.Quarto = {
 <li><strong>誤差変数 (residual)</strong>: 分析している変数外の効果
 <ul>
 <li>測定誤差: 質問項目を測定する際のノイズ <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(e_1 \sim e_7\)</span></li>
-<li>構造残差: 構造モデル (後述) において，他の変数から矢印を向けられた変数の「説明しきれなかったブレ」<span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(e_7, e_8\)</span></li>
+<li>構造残差: 構造モデル (後述) において，他の変数から矢印を向けられた変数の「説明しきれなかったブレ」<span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(e_8, e_9\)</span></li>
 </ul></li>
 <li><strong>外生変数 (Exogeneous Variable)</strong>: モデルの中で，一度も他の変数の結果にならない変数
 <ul>
 <li>モデルの外から導入される変数</li>
-<li>他の変数から矢印が向かず，他の変数に対して矢印が向くだけの変数 <span class="math inline">\(\rightarrow\)</span> モデル中の緑色の変数</li>
+<li>他の変数から自身に対しては矢印が向かず，他の変数に対して矢印が向くだけの変数 <span class="math inline">\(\rightarrow\)</span> モデル中の緑色の変数</li>
 </ul></li>
 <li><strong>内生変数 (Endogeneous Variable)</strong>: 少なくとも一度は他の変数の結果になる変数
 <ul>
 <li>モデルの内部で変動が説明される変数</li>
-<li>少なくとも1つ以上の変数から矢印が向く変数。この変数から他の変数に矢印が向くかどうかは関係ない。<span class="math inline">\(\rightarrow\)</span> モデル中の青色の変数</li>
+<li>少なくとも1つ以上の他の変数から矢印が向く変数。この変数から他の変数に矢印が向くかどうかは関係ない。<span class="math inline">\(\rightarrow\)</span> モデル中の青色の変数</li>
 </ul></li>
 </ul>
 <figure style="text-align: center;" class="figure">
@@ -4238,13 +4238,15 @@ Fig.1 サンプルモデル
 </figure>
 </section>
 <section id="sem-を構成する基本的なモデル" class="level4">
-<h4 class="anchored" data-anchor-id="sem-を構成する基本的なモデル">SEM を構成する基本的なモデル</h4>
+<h4 class="anchored" data-anchor-id="sem-を構成する基本的なモデル"><strong>SEM を構成する基本的なモデル</strong></h4>
 <p>次に，SEM の基本となる2つのモデルを説明します。</p>
 <p><strong>測定モデル (測定方程式)</strong></p>
 <ul>
-<li>共通の原因としての潜在変数が，複数個の観測変数に影響を与えている様子を記述する方程式 (因子分析的なモデル)</li>
+<li>共通の原因としての潜在変数が，複数個の観測変数に影響を与えている様子を記述する方程式 (因子分析的なモデル)
+<ul>
 <li>因子分析では，質問項目 (目に見える四角)から，背後にある心理特性 (目に見えない丸)を浮き彫りにする。</li>
 <li>サンプルモデルでは，観測変数 <span class="math inline">\(Y_1 \sim Y_3\)</span> のデータは，共通の潜在変数 <span class="math inline">\(f_1\)</span> から生み出されているという構造を考えている</li>
+</ul></li>
 </ul>
 <figure style="text-align: center;" class="figure">
 <figcaption>
@@ -4254,9 +4256,11 @@ Fig.2 測定モデル
 </figure>
 <p><strong>構造モデル (構造方程式)</strong></p>
 <ul>
-<li>回帰分析的な <strong>因果関係</strong><sup>1</sup> を表現するモデル</li>
+<li>回帰分析的な <strong>因果関係</strong><sup>1</sup> を表現するモデル
+<ul>
 <li>矢印の両端は，観測変数でも潜在変数でもどちらでも良い。</li>
 <li>サンプルモデルでは，潜在変数 <span class="math inline">\(f_1\)</span> は，<span class="math inline">\(f_2\)</span> に影響されるという構造を考えている</li>
+</ul></li>
 </ul>
 <blockquote class="blockquote">
 <p><sup>1</sup>日常的な用語の因果関係とは異なるので注意</p>
@@ -4272,32 +4276,29 @@ Fig.3 構造モデル
 </section>
 <section id="パス図のルール" class="level3">
 <h3 class="anchored" data-anchor-id="パス図のルール">2. パス図のルール</h3>
-<p>SEMでは，分析モデルを「パス図 (Path Diagram)」と呼ばれる図で表現します。 描く際，および読む際のルールは世界共通で非常にシンプルです。</p>
+<p>SEMでは，分析モデルを「パス図 (Path Diagram)」と呼ばれる図で表現します。 描く際，および読む際のルールは世界共通であり，このルールに従うことで誰もが理解可能なパス図を作ることができます。逆に言えば，ルールを逸脱すると，他者が読めない・誤解を生むモデルとなります。</p>
 <ul>
-<li>四角形 <span class="math inline">\(\square\)</span>: 観測変数 (Observed Variable)<br>
+<li><strong>四角形 <span class="math inline">\(\square\)</span>: 観測変数 (Observed Variable)</strong><br>
 実際にデータシートに数字として入っているもの。質問紙の個別項目や，合計得点 (スコア)など。</li>
-<li>楕円 (丸) <span class="math inline">\(\bigcirc\)</span>: 潜在変数 (Latent Variable)<br>
+<li><strong>楕円 (丸) <span class="math inline">\(\bigcirc\)</span>: 潜在変数 (Latent Variable)</strong><br>
 目に見えない心の内面。観測変数 (四角)を束ねることで，統計的に推定されたもの。</li>
-<li>片矢印 <span class="math inline">\(\rightarrow\)</span>: 因果関係 (Path)<br>
+<li><strong>片矢印 <span class="math inline">\(\rightarrow\)</span>: 因果関係 (Path)</strong><br>
 矢印の根元が「原因 (独立変数)」，先が「結果 (従属変数)」。</li>
-<li>両矢印 <span class="math inline">\(\leftrightarrow\)</span>: 相関 (Correlation)，または共分散 (Covariance)<br>
+<li><strong>両矢印 <span class="math inline">\(\leftrightarrow\)</span>: 相関 (Correlation)</strong>，または<strong>共分散 (Covariance)</strong><br>
 2つの変数の間に，因果関係は特定しないが，お互いに関連があることを示す。</li>
-<li>小さな矢印と記号 <span class="math inline">\(e\)</span>: 誤差・残差 (Error)
+<li><strong>記号 <span class="math inline">\(e\)</span> と小さな矢印: 誤差・残差 (Error)</strong>
 <ul>
 <li>測定誤差: 質問項目 (四角)を測定する際のノイズ。</li>
 <li>構造残差: 構造モデルにおいて，他の変数から矢印を向けられた変数の「説明しきれなかったブレ」。</li>
 </ul></li>
 </ul>
-<div style="page-break-before:always">
-
-</div>
 </section>
 <section id="アクティブワーク紙とペンでモデルを描いてみよう" class="level3">
 <h3 class="anchored" data-anchor-id="アクティブワーク紙とペンでモデルを描いてみよう">3. 【アクティブ・ワーク】紙とペンでモデルを描いてみよう</h3>
 <p>臨床心理学の研究でよく使われる「媒介モデル (間接効果モデル)」を例に，実際に手を動かして図を描いてみましょう。</p>
 <p>ここでは，「合計スコア (観測変数)」として扱う変数と，「項目を束ねて潜在変数」として扱う変数の違いを意識しながらモデルを組み立てます。</p>
-<section id="お題" class="level4">
-<h4 class="anchored" data-anchor-id="お題">【お題】</h4>
+<section id="考えるモデル" class="level4">
+<h4 class="anchored" data-anchor-id="考えるモデル">【考えるモデル】</h4>
 <p>「ストレス対処行動 (コーピング)の合計スコア」が，「自尊感情 (潜在変数)」を高め，その結果として「抑うつ症状の合計スコア」が軽減される。</p>
 <ul>
 <li>潜在変数 (丸 <span class="math inline">\(\bigcirc\)</span>):自尊感情 (変数名：Esteem)
@@ -4308,37 +4309,40 @@ Fig.3 構造モデル
 <ul>
 <li><code>Coping</code>：コーピング質問紙の合計点 (データとして数字が1つだけ存在)</li>
 <li><code>Depress</code>：抑うつ質問紙の合計点 (データとして数字が1つだけ存在)</li>
-<li><code>est_1 〜 est_10</code>：Rosenberg自尊感情尺度の個別質問10項目 (計10個の変数)</li>
+<li><code>$est_1$ 〜 $est_{10}$</code>：Rosenberg自尊感情尺度の個別質問10項目 (計10個の変数)</li>
 </ul></li>
 </ul>
+<blockquote class="blockquote">
+<p><strong>注：</strong> 通常，コーピングや抑うつも複数項目ある尺度によって測定されるが，ここではこれらの変数はあらかじめ合成得点 (和または平均) を求め，測定方程式は考えないものとする。</p>
+</blockquote>
 </section>
 <section id="作図の手順" class="level4">
 <h4 class="anchored" data-anchor-id="作図の手順">【作図の手順】</h4>
 <ol type="1">
 <li>メインの変数を配置する
 <ol type="1">
-<li>紙の左側にコーピングを表す 四角形 <span class="math inline">\(\square\)</span> (<code>Coping</code>) を描きます。</li>
-<li>紙の右側に抑うつを表す 四角形 <span class="math inline">\(\square\)</span> (<code>Depress</code>) を描きます。</li>
-<li>紙の真ん中に自尊感情を表す 楕円 (丸) <span class="math inline">\(\bigcirc\)</span> (<code>Esteem</code>) を描きます。</li>
+<li>紙の左側にコーピングを表す 四角形 <span class="math inline">\(\square\)</span> (<code>Coping</code>) を描く。</li>
+<li>紙の右側に抑うつを表す 四角形 <span class="math inline">\(\square\)</span> (<code>Depress</code>) を描く。</li>
+<li>紙の真ん中に自尊感情を表す 楕円 (丸) <span class="math inline">\(\bigcirc\)</span> (<code>Esteem</code>) を描く。</li>
 </ol></li>
 <li>自尊感情の「測定モデル (因子分析部分)」を描く
 <ol type="1">
-<li>真ん中の○ (<code>Esteem</code>) の下に，10個の小さな 四角形 <span class="math inline">\(\square\)</span> (<code>est_1</code> 〜 <code>est_10</code>) を一列に並べて描きます。</li>
-<li><code>Esteem</code> から，その下にある10個の四角それぞれに向かって，上から下へ <strong>片矢印 <span class="math inline">\(\rightarrow\)</span> を10本</strong> 引きます。</li>
-<li>10個の四角のそれぞれに対して，下から乗るような <strong>測定誤差 (<span class="math inline">\(e_1\)</span> 〜 <span class="math inline">\(e_{10}\)</span>)の小さな矢印</strong> を引きます。</li>
-<li>これで，自尊感情という「目に見えない構成概念 (丸)」が，10個の質問 (四角)に影響を与えている測定モデルが完成しました。</li>
+<li>真ん中の○ (<code>Esteem</code>) の下に，10個の小さな 四角形 <span class="math inline">\(\square\)</span> (<code>est_1</code> 〜 <code>est_10</code>) を一列に並べて描く。</li>
+<li><code>Esteem</code> から，その下にある10個の四角それぞれに向かって，上から下へ <strong>片矢印 <span class="math inline">\(\rightarrow\)</span> を10本</strong> 引く。</li>
+<li>10個の四角のそれぞれに対して，下から乗るような <strong>測定誤差 (<span class="math inline">\(e_1\)</span> 〜 <span class="math inline">\(e_{10}\)</span>)の小さな矢印</strong> を引く。</li>
+<li>これで，自尊感情という「目に見えない構成概念 (丸)」が，10個の質問 (四角)に影響を与えている測定モデルが完成</li>
 </ol></li>
 <li>「構造モデル (回帰分析部分)」を描く (仮説の矢印)
 <ol type="1">
-<li>左の <code>Coping</code> (四角) <span class="math inline">\(\rightarrow\)</span> 真ん中の <code>Esteem</code> (丸) へ片矢印を引きます。</li>
-<li>真ん中の <code>Esteem</code> (丸) <span class="math inline">\(\rightarrow\)</span> 右の <code>Depress</code> (四角) へ片矢印を引きます。</li>
-<li>左の <code>Coping</code> (四角) <span class="math inline">\(\rightarrow\)</span> 右の <code>Depress</code> (四角) へ，直接の影響を表す片矢印を引きます。</li>
+<li>左の <code>Coping</code> (四角) <span class="math inline">\(\rightarrow\)</span> 真ん中の <code>Esteem</code> (丸) へ片矢印を引く。</li>
+<li>真ん中の <code>Esteem</code> (丸) <span class="math inline">\(\rightarrow\)</span> 右の <code>Depress</code> (四角) へ片矢印を引く。</li>
+<li>左の <code>Coping</code> (四角) <span class="math inline">\(\rightarrow\)</span> 右の <code>Depress</code> (四角) へ，直接の影響を表す片矢印を引く。</li>
 </ol></li>
 <li>構造残差を描く
 <ol type="1">
-<li>他の変数から矢印を「向けられている (影響を受けている)」変数には，説明しきれないブレが存在します。</li>
-<li>真ん中の <code>Esteem</code> (丸)に対して，外側から小さな 構造残差 (<span class="math inline">\(e_{11}\)</span>) を矢印で差し込みます。</li>
-<li>右の <code>Depress</code> (四角)に対して，外側から小さな 構造残差 (<span class="math inline">\(e_{12}\)</span>) を矢印で差し込みます。</li>
+<li>他の変数から矢印を「向けられている (影響を受けている)」変数には，説明しきれないブレが存在する。</li>
+<li>真ん中の <code>Esteem</code> (丸)に対して，外側から小さな 構造残差 (<span class="math inline">\(e_{11}\)</span>) を矢印で差し込む。</li>
+<li>右の <code>Depress</code> (四角)に対して，外側から小さな 構造残差 (<span class="math inline">\(e_{12}\)</span>) を矢印で差し込む。</li>
 </ol></li>
 </ol>
 </section>
@@ -4349,7 +4353,7 @@ Fig.3 構造モデル
 <p>自尊感情 (丸)が個々の質問 (四角)にどう表れているかを示す数式です。 例として，1項目目 (est_1)と10項目目 (est_10)の方程式を書いてみましょう。</p>
 <p><span class="math inline">\(est_1 = \lambda_1 \times \text{Esteem} + e_1\)</span></p>
 <p><span class="math inline">\(est_{10} = \lambda_{10} \times \text{Esteem} + e_{10}\)</span></p>
-<p><span class="math inline">\(\lambda\)</span> (ラムダ)は「因子負荷量」と呼ばれる係数です。</p>
+<p><span class="math inline">\(\lambda\)</span> (ラムダ)は「因子負荷量」と呼ばれる係数， <span class="math inline">\(e\)</span> は「残差」です。</p>
 <p><strong>② 構造方程式 (Structural Equation)</strong></p>
 <p>変数同士の因果関係を示す数式です。矢印がどこから刺さっているかに注目して，影響を受けている変数 (Esteem と Depress)の方程式を書いてみましょう。</p>
 <p><span class="math inline">\(\text{Esteem} = \beta_1 \times \text{Coping} + e_{11}\)</span></p>
