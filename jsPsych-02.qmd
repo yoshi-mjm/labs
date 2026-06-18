@@ -5,7 +5,8 @@ format:
     html:
         theme: "flatly"
         embed-resources: true
-        highlight-style: github
+        highlight-style: tango
+output-dir: "docs"
 ---
 
 # jsPsychの応用とデータ確認
@@ -97,7 +98,6 @@ format:
     <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="jspsych-display">
     <script src="../jspsych/jspsych.js"></script>
     <script src="../jspsych/plugin-instructions.js"></script>
     <script src="../jspsych/plugin-html-keyboard-response.js"></script>
@@ -106,7 +106,6 @@ format:
     <script src="../jspsych/plugin-survey-likert.js"></script>
     <script src="../jspsych/plugin-survey.js"></script>
     <script src="script.js"></script>
-    </div>
 </body>
 </html>
 ```
