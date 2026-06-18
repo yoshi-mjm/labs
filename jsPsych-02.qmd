@@ -799,7 +799,27 @@ CDS の詳細には立ち入りませんが，jsPsych でも，この CDN に対
 具体的な作業としては，html で，パッケージのライブラリを読み込んでいる箇所を CDN 用の記述に書き換えるだけで，例えば，jspsych.js 本体であれば，`<link href="../jspsych/css/jspsych.css" rel="stylesheet" type="text/css">` から `<link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />` と書き換えることによって，CDN 上のものを利用するようにすることができます。
 
 jsPsych の場合，https://unpkg.com/ というサイトが CDN サーバとなっています。その後の，jspsych@7.3.4 は，jspsych の ver 7.3.4 を読み出せ，という指示です。
-それぞれのプラグインは CDN サーバは同じですが，バージョン表記は異なりますので，
+それぞれのプラグインは CDN サーバは同じですが，バージョン表記は異なりますので，jsPsych の公式サイト (ver.7 用: [https://www.jspsych.org/v7/](https://www.jspsych.org/v7/)) の各プラグインの解説にある `Install` $\rightarrow$ `Using the CDN-hosted JavaScript file:` にある，コードをコピーして，index.html の `script` ブロックに書いてください。
+
+例えば，Instruction プラグインの場合 ([https://www.jspsych.org/v7/plugins/instructions/](https://www.jspsych.org/v7/plugins/instructions/))，該当箇所には
+
+```html
+<script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.4"></script>
+```
+
+と書かれていますので，`plugin-instructions.js` を読み込んでいた箇所の 
+
+```html
+<script src="jspsych/plugin-instructions.js"></script>
+```
+
+の部分を，上の CDN サーバーからパッケージを読み出すコードと差し替えてください。
+
+合わせて，jsPsych のスタイルを定義している `jspsych.css` と，今回使用している `plugin-survey.css` 用のスタイルファイルである，`survey.css` も CDN 経由で呼び出してあげることにします。
+
+以下が，修正後の `index.html` となりますので，このファイルは，例えば `index-cdn.html` という名前で保存しておくと良いでしょう。
+
+> 従来の `index.html` を置き換えても問題はありません。
 
 ```html
 <!DOCTYPE html>
