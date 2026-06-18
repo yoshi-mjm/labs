@@ -349,43 +349,6 @@ body {
     color: #333; /* 文字色 */
 }
 
-/* jsPsychのコンテンツが実際に表示される部分（id="jspsych-display"） */
-#jspsych-display {
-    max-width: 90vw; /* 画面幅の90%が最大幅 */
-    max-height: 90vh; /* 画面高さの90%が最大高さ */
-    width: 100%; /* 親要素の幅に合わせて伸びる */
-    height: 100%; /* 親要素の高さに合わせて伸びる */
-    overflow: auto; /* 内容がはみ出したらスクロールできるようにする */
-    background-color: #fff; /* 背景色 */
-    padding: 20px; /* 内側の余白 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影 */
-    border-radius: 8px; /* 角を丸くする */
-    box-sizing: border-box; /* paddingやborderを幅・高さに含める */
-}
-
-/* jsPsychが自動生成するコンテンツのスタイル調整 */
-.jspsych-content {
-    text-align: center; /* テキストを中央揃え */
-    margin-bottom: 20px; /* 下に余白 */
-}
-
-/* 質問文のスタイル */
-.jspsych-stimulus {
-    font-size: 1.2em; /* フォントサイズを少し大きく */
-    margin-bottom: 25px; /* 下に余白 */
-    line-height: 1.5; /* 行の高さ */
-}
-
-/* 入力フィールドのスタイル */
-.jspsych-survey-text input[type="text"] {
-    width: 80%; /* 幅 */
-    padding: 10px; /* 内側の余白 */
-    margin-top: 10px; /* 上に余白 */
-    font-size: 1em; /* フォントサイズ */
-    border: 1px solid #ccc; /* 枠線 */
-    border-radius: 4px; /* 角を丸くする */
-}
-
 /* ボタンのスタイル */
 .jspsych-btn {
     background-color: #007bff; /* ボタンの背景色 */
@@ -401,13 +364,6 @@ body {
 
 .jspsych-btn:hover {
     background-color: #0056b3; /* ホバー時の背景色 */
-}
-
-/* その他、必要に応じて追加 */
-.jspsych-instructions {
-    text-align: center;
-    font-size: 1.1em;
-    line-height: 1.6;
 }
 ```
 
